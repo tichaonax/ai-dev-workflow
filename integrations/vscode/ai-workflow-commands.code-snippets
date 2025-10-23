@@ -1,0 +1,250 @@
+{
+  "ai-train": {
+    "prefix": "ai-train",
+    "description": "First-time AI training message (teaches workflow commands)",
+    "body": [
+      "👋 Hi ${1:Claude/ChatGPT}! Please read these context files to learn our development workflow:",
+      "",
+      "📖 ai-contexts/contexts/master-context.md",
+      "📖 ai-contexts/contexts/code-workflow.md",
+      "",
+      "These files contain:",
+      "- Workflow commands (TASK START, TASK STATUS, etc.)",
+      "- Coding standards and conventions", 
+      "- Quality gates and approval processes",
+      "",
+      "After reading them, help me with: TASK START ${2:PROJECT-123} ${3:user-authentication}"
+    ]
+  },
+
+  "task-start": {
+    "prefix": "task-start",
+    "description": "Start a new task with template selection (Phase 1: Setup)",
+    "body": [
+      "TASK START ${1:jira-ticket} ${2:description}",
+      "",
+      "Please show me the available templates and help me set up the context file for this ${3:feature/bug/refactor}."
+    ]
+  },
+
+  "start": {
+    "prefix": "start",
+    "description": "Begin work after filling context file (Phase 2: Execution)",
+    "body": [
+      "START",
+      "",
+      "I've filled in the requirements in the context file. Please create the project plan and begin Phase 1."
+    ]
+  },
+
+  "task-update": {
+    "prefix": "task-update",
+    "description": "Request AI to update project plan checkboxes",
+    "body": [
+      "TASK UPDATE",
+      "",
+      "Please:",
+      "1. Update checkboxes in current project plan based on completed work",
+      "2. Mark completed tasks with [x]",
+      "3. Add notes on any challenges or decisions made",
+      "4. Show updated progress summary",
+      "5. Identify next tasks to work on"
+    ]
+  },
+
+  "task-complete": {
+    "prefix": "task-complete",
+    "description": "Complete current task and archive project plan",
+    "body": [
+      "TASK COMPLETE",
+      "",
+      "Please:",
+      "1. Verify all checkboxes are marked [x] in current project plan",
+      "2. Add review summary section with lessons learned",
+      "3. Create folder: ai-contexts/project-plans/completed/${CURRENT_YEAR}-${CURRENT_MONTH}/",
+      "4. Move project plan from active/ to completed/${CURRENT_YEAR}-${CURRENT_MONTH}/",
+      "5. Generate descriptive commit message based on completed work",
+      "6. Stage and commit: git add ai-contexts/project-plans/completed/ && git commit -m 'message'",
+      "7. Provide completion summary with metrics"
+    ]
+  },
+
+  "task-status": {
+    "prefix": "task-status",
+    "description": "Show current task progress and status",
+    "body": [
+      "TASK STATUS",
+      "",
+      "Please:",
+      "1. Show current project plan progress",
+      "2. List completed [x] and pending [ ] tasks", 
+      "3. Calculate completion percentage",
+      "4. Estimate remaining work time",
+      "5. Highlight any blockers or issues",
+      "6. Suggest next steps"
+    ]
+  },
+
+  "move-user-context": {
+    "prefix": "move-context",
+    "description": "Move user context file to completed documentation",
+    "body": [
+      "MOVE USER CONTEXT",
+      "",
+      "Please:",
+      "1. Find related user context file in ai-contexts/wip/",
+      "2. Move to ai-contexts/project-plans/completed/${CURRENT_YEAR}-${CURRENT_MONTH}/",
+      "3. Rename with 'context-' prefix for clarity",
+      "4. Add to same commit as project plan",
+      "5. Confirm both files archived together"
+    ]
+  },
+
+  "archive-project": {
+    "prefix": "archive-project",
+    "description": "Archive both project plan and user context together",
+    "body": [
+      "ARCHIVE PROJECT",
+      "",
+      "Please:",
+      "1. Move project plan from active/ to completed/${CURRENT_YEAR}-${CURRENT_MONTH}/",
+      "2. Move related context file from wip/ to completed/${CURRENT_YEAR}-${CURRENT_MONTH}/",
+      "3. Rename context file with 'context-' prefix",
+      "4. Generate comprehensive commit message",
+      "5. Commit both files together",
+      "6. Provide archival summary"
+    ]
+  },
+
+  "clean-wip": {
+    "prefix": "clean-wip",
+    "description": "Clean up completed items from wip folder",
+    "body": [
+      "CLEAN WIP",
+      "",
+      "Please:",
+      "1. List files in ai-contexts/wip/",
+      "2. Identify which have completed project plans",
+      "3. Ask permission before removing each file",
+      "4. Move to completed/ or delete based on preference",
+      "5. Confirm wip/ folder cleaned up"
+    ]
+  },
+
+  "document-work": {
+    "prefix": "document-work",
+    "description": "Generate commit message from project plan",
+    "body": [
+      "DOCUMENT WORK",
+      "",
+      "Please:",
+      "1. Read current project plan",
+      "2. Generate descriptive commit message based on completed tasks",
+      "3. Include key metrics and impact",
+      "4. Follow conventional commit format",
+      "5. Suggest commit message for review"
+    ]
+  },
+
+  "summary-week": {
+    "prefix": "summary-week",
+    "description": "Show this week's completed work",
+    "body": [
+      "SUMMARY WEEK",
+      "",
+      "Please:",
+      "1. List all project plans completed this week",
+      "2. Show files from ai-contexts/project-plans/completed/",
+      "3. Summarize key accomplishments",
+      "4. Calculate productivity metrics",
+      "5. Highlight major features or fixes delivered"
+    ]
+  },
+
+  "summary-month": {
+    "prefix": "summary-month",
+    "description": "Show this month's completed work",
+    "body": [
+      "SUMMARY MONTH", 
+      "",
+      "Please:",
+      "1. List all project plans in completed/${CURRENT_YEAR}-${CURRENT_MONTH}/",
+      "2. Group by feature type (bug fix, feature, refactor)",
+      "3. Show completion trends and velocity",
+      "4. Highlight major deliverables",
+      "5. Generate monthly accomplishment report"
+    ]
+  },
+
+  "find-work": {
+    "prefix": "find-work",
+    "description": "Search completed project plans for specific work",
+    "body": [
+      "FIND WORK ${1:keyword}",
+      "",
+      "Please:",
+      "1. Search ai-contexts/project-plans/completed/ for '${1:keyword}'",
+      "2. Look in file names and content",
+      "3. Show matching project plans with dates",
+      "4. Provide brief summary of each match",
+      "5. Help locate relevant historical work"
+    ]
+  },
+
+  "rollback-task": {
+    "prefix": "rollback-task",
+    "description": "Move project plan back to active work",
+    "body": [
+      "ROLLBACK TASK",
+      "",
+      "Please:",
+      "1. Move specified project plan from completed/ back to active/",
+      "2. Reset relevant checkboxes to [ ] if needed",
+      "3. Add rollback note with reason",
+      "4. Update project plan with current date",
+      "5. Confirm task is back in active development"
+    ]
+  },
+
+  "duplicate-plan": {
+    "prefix": "duplicate-plan",
+    "description": "Copy project plan for similar work",
+    "body": [
+      "DUPLICATE PLAN ${1:new-ticket}",
+      "",
+      "Please:",
+      "1. Copy current/specified project plan as template",
+      "2. Update with new ticket: ${1:new-ticket}",
+      "3. Reset all checkboxes to [ ]",
+      "4. Update dates and file names",
+      "5. Customize for new requirements",
+      "6. Save as new project plan in active/"
+    ]
+  },
+
+  "template-save": {
+    "prefix": "template-save",
+    "description": "Save current project plan as reusable template",
+    "body": [
+      "TEMPLATE SAVE ${1:template-name}",
+      "",
+      "Please:",
+      "1. Copy current project plan structure",
+      "2. Remove specific ticket/date references",
+      "3. Reset checkboxes to [ ]",
+      "4. Add placeholder variables",
+      "5. Save as: templates/project-plans/${1:template-name}.md",
+      "6. Document template usage in README"
+    ]
+  },
+
+  "show-commands": {
+    "prefix": "show-commands",
+    "description": "Display all available workflow commands",
+    "body": [
+      "SHOW COMMANDS",
+      "",
+      "Please display all available workflow commands organized by category with descriptions."
+    ]
+  }
+}

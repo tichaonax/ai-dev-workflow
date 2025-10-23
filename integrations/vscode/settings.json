@@ -1,0 +1,15 @@
+{
+  "files.associations": {
+    "*-session-template.md": "markdown",
+    "*-context.md": "markdown"
+  },
+  "files.exclude": {
+    "**/.DS_Store": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.git": true
+  },
+  "markdown.preview.breaks": true,
+  "markdown.preview.linkify": true
+}
