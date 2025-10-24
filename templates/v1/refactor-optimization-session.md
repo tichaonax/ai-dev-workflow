@@ -42,7 +42,7 @@ For improving or simplifying existing code while preserving function and tests.
 
 <!-- Define what needs to be refactored or optimized -->
 
-**JIRA Ticket:** <!-- e.g., HPP-1234, or NOTKT if no ticket -->
+**Ticket:** <!-- e.g., HPP-1234, or NOTKT if no ticket -->
 
 **Target Area:**
 

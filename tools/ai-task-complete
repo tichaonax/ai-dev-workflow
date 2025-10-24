@@ -57,7 +57,7 @@ PLAN_FILE:
 EXAMPLES:
     $0                                    # Dry-run mode
     $0 --yes                             # Actually execute
-    $0 --yes projectplan-hpp-5470.md    # Complete specific plan
+    $0 --yes projectplan-NOTKT.md    # Complete specific plan
 
 SAFETY:
     - Defaults to dry-run mode

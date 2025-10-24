@@ -103,12 +103,12 @@ AI: [Reads context, creates project plan, begins Phase 1 work]
 
 ### 1. Start New Task
 ```bash
-TASK START HPP-5470 tailwind-conversion
+TASK START NOTKT tailwind-conversion
 ```
 
 **AI Response:**
 ```
-🎯 TASK START: HPP-5470 tailwind-conversion
+🎯 TASK START: NOTKT tailwind-conversion
 
 📋 Available Templates:
 1. 🆕 feature-development 
@@ -134,14 +134,14 @@ Which template would you like to use? (Enter number or name)
 ✅ Selected: refactor-optimization template
 
 📝 Context File Status:
-❌ File doesn't exist: ai-contexts/wip/HPP-5470-tailwind-conversion.md
+❌ File doesn't exist: ai-contexts/wip/NOTKT-tailwind-conversion.md
 
 🔄 Creating new context file from template...
-✅ Created: ai-contexts/wip/HPP-5470-tailwind-conversion.md
+✅ Created: ai-contexts/wip/NOTKT-tailwind-conversion.md
 📄 Based on: ai-contexts/templates/v1/refactor-optimization-session.md
 
 📋 Next Steps:
-1. 📂 Open file: ai-contexts/wip/HPP-5470-tailwind-conversion.md
+1. 📂 Open file: ai-contexts/wip/NOTKT-tailwind-conversion.md
 2. ✏️  Fill in your specific requirements:
    - Current state description
    - Refactoring goals
@@ -154,7 +154,7 @@ Which template would you like to use? (Enter number or name)
 ```
 
 ### 3. Fill Requirements (Human Step)
-Open `ai-contexts/wip/HPP-5470-tailwind-conversion.md` and fill in:
+Open `ai-contexts/wip/NOTKT-tailwind-conversion.md` and fill in:
 - What needs refactoring
 - Why you're doing it  
 - Specific goals and constraints
@@ -170,11 +170,11 @@ START
 ```
 🚀 START: Beginning project execution
 
-📖 Reading requirements: ai-contexts/wip/HPP-5470-tailwind-conversion.md
+📖 Reading requirements: ai-contexts/wip/NOTKT-tailwind-conversion.md
 ✅ Context loaded successfully
 
 🔄 Creating comprehensive project plan...
-✅ Created: ai-contexts/project-plans/active/projectplan-HPP-5470-tailwind-conversion-2025-10-21.md
+✅ Created: ai-contexts/project-plans/active/projectplan-NOTKT-tailwind-conversion-2025-10-21.md
 
 📋 Project Plan Summary:
 - Total tasks: 34
@@ -204,7 +204,7 @@ TASK STATUS
 ```
 📊 AI Task Status - Project Progress
 ==================================
-   Plan: projectplan-HPP-5470-tailwind-conversion-2025-10-21.md
+   Plan: projectplan-NOTKT-tailwind-conversion-2025-10-21.md
    
 📈 Progress Summary:
    Total tasks: 34

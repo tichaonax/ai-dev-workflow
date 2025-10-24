@@ -23,8 +23,8 @@ WORKFLOW_VERSION="1.0.0"
 WORKFLOW_REPO="https://github.com/tichaonax/ai-dev-workflow.git"
 
 echo -e "${BLUE}╔══════════════════════════════════════════════════════╗${NC}"
-echo -e "${BLUE}║   AI Dev Workflow - Project Installation           ║${NC}"
-echo -e "${BLUE}║   Version: ${WORKFLOW_VERSION}                                    ║${NC}"
+echo -e "${BLUE}║   AI Dev Workflow - Project Installation             ║${NC}"
+echo -e "${BLUE}║   Version: ${WORKFLOW_VERSION}                                     ║${NC}"
 echo -e "${BLUE}╚══════════════════════════════════════════════════════╝${NC}"
 echo ""
 

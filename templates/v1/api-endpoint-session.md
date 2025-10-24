@@ -51,7 +51,7 @@ For creating new REST API endpoints with proper request/response handling, valid
 
 <!-- Define the API endpoint requirements -->
 
-**JIRA Ticket:** <!-- e.g., HPP-1234, or NOTKT if no ticket -->
+**Ticket:** <!-- e.g., HPP-1234, or NOTKT if no ticket -->
 
 **Endpoint Path:**
 

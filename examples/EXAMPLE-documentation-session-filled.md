@@ -50,7 +50,7 @@ For creating or updating technical documentation, API docs, README files, and co
 
 <!-- Select the type of documentation needed -->
 
-**JIRA Ticket:** HPP-9841
+**Ticket:** HPP-9841
 
 **Documentation Category:**
 

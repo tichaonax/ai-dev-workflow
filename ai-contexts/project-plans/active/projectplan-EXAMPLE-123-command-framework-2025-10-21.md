@@ -1,6 +1,6 @@
 # Project Plan: EXAMPLE-123 - Add Command Framework
 
-**JIRA Ticket:** EXAMPLE-123  
+**Ticket:** EXAMPLE-123  
 **Created:** 2025-10-21  
 **Type:** Feature Development  
 **Status:** Active  

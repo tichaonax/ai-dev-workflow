@@ -73,7 +73,7 @@ Open your chosen template and fill in the sections:
 ## 📋 Feature Overview
 
 **Feature Name:** User profile page
-**JIRA Ticket:** HPP-1234
+**Ticket:** HPP-1234
 **Description:** Add a page where users can view/edit their profile
 
 ## 🎯 Objectives

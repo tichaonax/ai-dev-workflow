@@ -49,7 +49,7 @@ To review UI layouts, architectures, or theme organization before implementation
 
 <!-- Define what's being reviewed -->
 
-**JIRA Ticket:** HPP-2837
+**Ticket:** HPP-2837
 
 **Review Type:**
 

@@ -107,7 +107,7 @@ Real metrics from teams using this workflow:
 | **Security Review** | Security audits and fixes |
 | **Init Session** | General purpose, exploration |
 
-### 💡 Real Examples (15+ Complete Examples)
+### 💡 Real Examples (10 Complete Examples)
 
 - ✅ Feature: Employee leave request system (complete workflow)
 - ✅ Debug: Revenue calculation bug investigation
@@ -129,7 +129,7 @@ Real metrics from teams using this workflow:
 
 - **VS Code** - Workflow command snippets (`ai-contexts/integrations/vscode/`)
 - **GitHub** - PR templates and workflows
-- **Slack** - Channel setup guide
+- **Slack** - 🔜 Coming soon
 
 ---
 
@@ -480,10 +480,10 @@ Created by the engineering team at **Tichaona Hwandaza**.
 ## 📊 Project Stats
 
 - **Templates:** 9 specialized templates
-- **Examples:** 15+ real-world examples
-- **Context Documents:** 7 core contexts
+- **Examples:** 10 complete examples
+- **Context Documents:** 9 core contexts + 2 reference guides
 - **Documentation Pages:** 10+ guides
-- **Integration Support:** 3 platforms (VS Code, GitHub, Slack)
+- **Integration Support:** 2 platforms (VS Code, GitHub) + Slack coming soon
 - **Lines of Documentation:** 50,000+
 - **Real Usage:** Production-tested across multiple projects
 - **Proven Results:** 80% reduction in rework time
@@ -510,7 +510,7 @@ Created by the engineering team at **Tichaona Hwandaza**.
 - AI-powered template recommendations
 - Automatic metrics tracking
 - Team analytics dashboard
-- JIRA/Linear integration
+- ticket system (JIRA, Linear, GitHub Issues) integration
 - Multi-language support
 
 ---
@@ -565,10 +565,10 @@ Share your metrics! Help others see the value.
 4. Try different templates
 
 ### Team Rollout (1 day)
-1. Review [Team Presentation](presentations/AI-Workflow-Integration-Presentation.md)
-2. Set up [Slack Channel](presentations/Slack-Channel-Setup.md)
-3. Schedule training session
-4. Start with pilot project
+1. Review [Core Concepts](docs/concepts.md) and [Best Practices](docs/best-practices.md)
+2. Schedule training session with team
+3. Start with pilot project
+4. Share success stories and lessons learned
 
 ---
 

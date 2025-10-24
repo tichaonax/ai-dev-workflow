@@ -42,7 +42,7 @@ For improving or simplifying existing code while preserving function and tests.
 
 <!-- Define what needs to be refactored or optimized -->
 
-**JIRA Ticket:** HPP-4892
+**Ticket:** HPP-4892
 
 **Target Area:**
 Dashboard Recent Activity API Endpoint (`/api/dashboard/recent-activity/route.ts`)

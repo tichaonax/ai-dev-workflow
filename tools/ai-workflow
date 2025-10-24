@@ -128,7 +128,7 @@ ai_archive_project() {
     
     if [ -z "$1" ]; then
         echo -e "${RED}❌ Usage: ai-archive-project <project-plan-filename>${NC}"
-        echo "Example: ai-archive-project projectplan-hpp-5470-tailwind-conversion-2025-10-21.md"
+        echo "Example: ai-archive-project projectplan-NOTKT-tailwind-conversion-2025-10-21.md"
         return 1
     fi
     
@@ -277,7 +277,7 @@ case "$1" in
         echo ""
         echo "Examples:"
         echo "  ai-workflow status"
-        echo "  ai-workflow archive projectplan-hpp-5470-tailwind-conversion-2025-10-21.md"
+        echo "  ai-workflow archive projectplan-NOTKT-tailwind-conversion-2025-10-21.md"
         echo "  ai-workflow find tailwind"
         echo ""
         echo "For AI commands, use VS Code snippets or direct prompts:"

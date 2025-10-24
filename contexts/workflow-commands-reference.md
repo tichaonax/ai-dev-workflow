@@ -10,11 +10,11 @@ Instead of explaining the full workflow every time, users can use simple command
 
 ### **Task Management Commands**
 
-#### `TASK START {jira-ticket} {description}`
+#### `TASK START {ticket} {description}`
 **Purpose:** Create new project plan and begin structured work
 **AI Actions:**
-1. Read user context file: `ai-contexts/wip/{jira-ticket}-{description}.md` (if exists)
-2. Create project plan: `ai-contexts/project-plans/active/projectplan-{jira-ticket}-{description}-YYYY-MM-DD.md`
+1. Read user context file: `ai-contexts/wip/{ticket}-{description}.md` (if exists)
+2. Create project plan: `ai-contexts/project-plans/active/projectplan-{ticket}-{description}-YYYY-MM-DD.md`
 3. Include all 8 required sections:
    - Task Overview
    - Files Affected
@@ -29,8 +29,8 @@ Instead of explaining the full workflow every time, users can use simple command
 
 **Example:**
 ```
-User: "TASK START hpp-5470 tailwind-conversion"
-AI: ✅ Created projectplan-hpp-5470-tailwind-conversion-2025-10-21.md
+User: "TASK START NOTKT tailwind-conversion"
+AI: ✅ Created projectplan-NOTKT-tailwind-conversion-2025-10-21.md
     📁 Location: ai-contexts/project-plans/active/
     🎯 Ready to begin Phase 1: Analysis and Setup
 ```
@@ -235,7 +235,7 @@ HELP:
 ## 🔄 Typical Command Workflow
 
 ```
-1. User: "TASK START hpp-5470 tailwind-conversion"
+1. User: "TASK START NOTKT tailwind-conversion"
    AI: Creates project plan, ready for Phase 1
 
 2. User: works on implementation...

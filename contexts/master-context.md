@@ -39,7 +39,7 @@ When provided with specific examples in context documents:
 ## CRITICAL: MANDATORY WORKFLOW FOR ALL TASKS
 
 🚨 **BEFORE ANY CODE CHANGES:**
-1. Create projectplan-{jira-ticket}-{feature}-{date}.md **WITH BUILT-IN APPROVAL CHECKPOINTS**
+1. Create projectplan-{ticket}-{feature}-{date}.md **WITH BUILT-IN APPROVAL CHECKPOINTS**
 2. Get explicit user approval 
 3. NO EXCEPTIONS - This is not optional
 
@@ -66,7 +66,7 @@ The following commands trigger standardized AI behaviors for common workflow ope
 
 ## Core Commands
 
-### `TASK START {jira-ticket} {description}`
+### `TASK START {ticket} {description}`
 **AI Actions:**
 1. **Template Selection**: Show available templates and ask user to choose:
    - 🆕 **feature-development** - New features, screens, components
@@ -79,7 +79,7 @@ The following commands trigger standardized AI behaviors for common workflow ope
    - 🔒 **security-review** - Security audits and fixes
    - 🔍 **init-session** - General purpose, exploration
 2. **Template Preparation**: 
-   - Check if context file exists: `ai-contexts/wip/{jira-ticket}-{description}.md`
+   - Check if context file exists: `ai-contexts/wip/{ticket}-{description}.md`
    - If missing: Create new context file by copying chosen template
    - If exists: Show existing context file for review/editing
 3. **Wait for User Input**: **STOP HERE** - Do not create project plan yet
@@ -104,28 +104,120 @@ Which template would you like to use? (Enter number or name)
 ```
 
 ### `START` (after template selection and requirements filled)
+
+**⚠️ CRITICAL WARNING: This command ONLY creates the project plan**
+**⚠️ It does NOT execute any implementation phases**
+**⚠️ After this completes, you must use PHASE commands to execute**
+
 **AI Actions:**
-1. **Read Requirements**: Read completed context file: `ai-contexts/wip/{jira-ticket}-{description}.md`
-2. **Create Project Plan**: Generate comprehensive plan: `ai-contexts/project-plans/active/projectplan-{jira-ticket}-{description}-{YYYY-MM-DD}.md`
+1. **Read Requirements**: Read completed context file: `ai-contexts/wip/{ticket}-{description}.md`
+2. **Create Project Plan**: Generate comprehensive plan: `ai-contexts/project-plans/active/projectplan-{ticket}-{description}-{YYYY-MM-DD}.md`
 3. **Structure Validation**: Include all 8 required sections (overview, files, impact, checklist, risk, testing, rollback, review)
-4. **Phase Initiation**: Begin Phase 1 execution after plan approval
+4. **Present Plan**: Show project plan summary
+5. **Request Approval**: Ask "Approve this plan to begin Phase 1?"
+6. **🛑 FULL STOP**: No code execution happens here. Wait for user to review plan.
+
+**What Happens Next:**
+- User reviews the project plan
+- User types: `PHASE 1` or `EXECUTE PHASE 1` to start implementation
+- AI executes ONLY Phase 1 tasks
+- AI presents Phase 1 work for review
+- AI STOPS and waits for approval
+- User types: `PHASE 2` or `NEXT PHASE` to continue
+- Pattern repeats for each phase
 
 **Example Response:**
 ```
-✅ Created context file: ai-contexts/wip/PROJECT-123-user-authentication.md
-� Based on: feature-development template
+✅ Project Plan Created: projectplan-PROJECT-123-user-authentication-2025-10-23.md
 
-📋 Next Steps:
-1. Open and edit: ai-contexts/wip/PROJECT-123-user-authentication.md
-2. Fill in your specific requirements, goals, and constraints
-3. Save the file
-4. Type: START (to create project plan and begin work)
+📋 Plan Summary:
+- 5 phases identified
+- 23 tasks total
+- Estimated time: 6-8 hours
+- Files to create: 8
+- Files to modify: 3
 
-💡 The template includes sections for:
-- Problem description
-- Success criteria  
-- Technical requirements
-- Dependencies and constraints
+❓ Do you approve this plan?
+
+Type `PHASE 1` to begin implementation of Phase 1, or request changes.
+
+🛑 I will not execute any code until you command a specific phase.
+```
+
+### `PHASE 1` or `EXECUTE PHASE 1`
+**AI Actions:**
+1. **Execute Phase 1 Tasks ONLY** from the approved project plan
+2. **Mark Checkboxes**: Update project plan document with [x] for completed tasks
+3. **Present Phase 1 Review** with detailed summary (see format below)
+4. **Request Approval**: "Phase 1 complete. Review above. Type 'PHASE 2' to continue."
+5. **🛑 STOP HERE**: Do not proceed to Phase 2 without explicit command
+
+**Review Format:**
+```
+## 🔍 PHASE 1 REVIEW REQUEST
+
+**Completed Tasks:**
+- ✅ Task 1.1: Description
+- ✅ Task 1.2: Description
+
+**Files Created:**
+- `src/utils/helper.js` (156 lines) - Utility functions for data processing
+
+**Files Modified:**
+- `src/store/index.js` (+12 lines) - Added new action
+
+**Key Code Snippet:**
+```javascript
+// Show 5-10 lines of the most important/interesting code
+function criticalFunction() {
+  // Implementation
+}
+```
+
+**Design Decisions:**
+- **Decision 1**: [What you decided] - **Rationale**: [Why you decided it]
+- **Decision 2**: [What you decided] - **Rationale**: [Why you decided it]
+
+**Issues Encountered:**
+- [Any problems, workarounds, or deviations from plan]
+
+**Next Phase:** Phase 2 - UI Components Creation
+
+---
+
+❓ **APPROVAL REQUIRED**
+
+Please review the Phase 1 work above.
+
+Type:
+- `PHASE 2` or `NEXT PHASE` to continue to Phase 2
+- `REVISE [details]` to request changes
+- `EXPLAIN [topic]` for clarification on any aspect
+
+🛑 I will not proceed without your explicit command.
+```
+
+### `PHASE 2` (or `PHASE 3`, `PHASE 4`, etc.)
+**Pattern:** Same as Phase 1
+- Execute ONLY the specified phase
+- Present review with same detailed format
+- Request approval before proceeding
+- 🛑 STOP and wait
+
+### `NEXT PHASE` or `CONTINUE`
+**AI Actions:**
+1. Determine which phase was just completed
+2. Execute the next sequential phase (e.g., if Phase 2 done, execute Phase 3)
+3. Follow same review and approval pattern
+4. 🛑 STOP after presenting review
+
+**Example:**
+```
+Executing Phase 3 (Components Integration)...
+[work happens]
+## 🔍 PHASE 3 REVIEW REQUEST
+[detailed review]
+🛑 Awaiting your command to proceed to Phase 4
 ```
 
 ### `TASK UPDATE`

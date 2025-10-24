@@ -51,7 +51,7 @@ For creating new features, screens, or endpoints with structured planning.
 
 <!-- Fill in your specific feature requirements before starting -->
 
-**JIRA Ticket:** HPP-3421
+**Ticket:** HPP-3421
 
 **Feature Name:**
 Employee Leave Request Management System

@@ -50,7 +50,7 @@ For adding, modifying, or removing database tables, columns, relationships, or i
 
 <!-- Select the type of schema change -->
 
-**JIRA Ticket:** HPP-6543
+**Ticket:** HPP-6543
 
 **Change Category:**
 

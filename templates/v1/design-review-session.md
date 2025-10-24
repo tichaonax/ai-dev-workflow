@@ -49,7 +49,7 @@ To review UI layouts, architectures, or theme organization before implementation
 
 <!-- Define what's being reviewed -->
 
-**JIRA Ticket:** <!-- e.g., HPP-1234, or NOTKT if no ticket -->
+**Ticket:** <!-- e.g., HPP-1234, or NOTKT if no ticket -->
 
 **Review Type:**
 

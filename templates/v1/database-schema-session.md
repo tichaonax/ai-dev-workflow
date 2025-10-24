@@ -50,7 +50,7 @@ For adding, modifying, or removing database tables, columns, relationships, or i
 
 <!-- Select the type of schema change -->
 
-**JIRA Ticket:** <!-- e.g., HPP-1234, or NOTKT if no ticket -->
+**Ticket:** <!-- e.g., HPP-1234, or NOTKT if no ticket -->
 
 **Change Category:**
 

@@ -66,7 +66,7 @@ rm ai-contexts/wip/feature-add-expense-categories.md
 ### Do's ✅
 
 - ✅ Use descriptive filenames: `feature-add-expense-categories.md`
-- ✅ Include JIRA ticket number if applicable (or NOTKT if none)
+- ✅ Include ticket number if applicable (or NOTKT if none)
 - ✅ Fill in as much detail as you know
 - ✅ Update as requirements change
 - ✅ Keep one file per task/feature
@@ -80,7 +80,7 @@ rm ai-contexts/wip/feature-add-expense-categories.md
 
 ## 📋 Naming Convention
 
-**Format:** `{jira-ticket}-{brief-description}.md`
+**Format:** `{ticket}-{brief-description}.md`
 
 **Examples:**
 - `feature-add-expense-categories.md`

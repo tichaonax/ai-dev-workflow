@@ -43,7 +43,7 @@ Generic initialization for new AI sessions; establishes scope and expectations.
 
 <!-- Fill in your specific goal before starting the session -->
 
-**JIRA Ticket:** <!-- e.g., OCM-1234, DEV-5678, or NOTKT if no ticket -->
+**Ticket:** <!-- e.g., OCM-1234, DEV-5678, or NOTKT if no ticket -->
 
 **Goal:**
 
@@ -66,7 +66,7 @@ Generic initialization for new AI sessions; establishes scope and expectations.
 1. Read the recommended context files listed above
 2. Confirm context loading: "✅ Contexts loaded: master-context, code-workflow, general-problem-solving"
 3. Restate the session objective in your own words
-4. Create project plan document using format: `projectplan-{JIRA-TICKET}-{feature-name}-{YYYY-MM-DD}.md`
+4. Create project plan document using format: `projectplan-{TICKET-ID}-{feature-name}-{YYYY-MM-DD}.md`
 5. Perform impact analysis following code-workflow.md guidelines
 6. Create a detailed action plan with to-do checklist
 7. Identify dependencies, risks, and trade-offs

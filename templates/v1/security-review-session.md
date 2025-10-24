@@ -49,7 +49,7 @@ For conducting security reviews, identifying vulnerabilities, and implementing s
 
 <!-- Define what's being reviewed -->
 
-**JIRA Ticket:** <!-- e.g., HPP-1234, or NOTKT if no ticket -->
+**Ticket:** <!-- e.g., HPP-1234, or NOTKT if no ticket -->
 
 **Review Type:**
 

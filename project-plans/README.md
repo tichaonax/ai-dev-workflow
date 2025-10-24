@@ -23,7 +23,7 @@ project-plans/
 
 ## 📝 File Naming Convention
 
-**Format:** `projectplan-{jira-ticket}-{feature}-{YYYY-MM-DD}.md`
+**Format:** `projectplan-{ticket}-{feature}-{YYYY-MM-DD}.md`
 
 **Examples:**
 - `projectplan-NOTKT-expense-category-types-2025-01-21.md`
@@ -157,7 +157,7 @@ Every AI-generated project plan MUST include:
 
 ### 1. Task Overview
 - One-sentence description
-- JIRA ticket link
+- ticket link
 - Related documentation
 
 ### 2. Files Affected

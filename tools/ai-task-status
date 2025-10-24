@@ -41,7 +41,7 @@ PLAN_FILE:
 
 EXAMPLES:
     $0                                    # Auto-detect current plan
-    $0 projectplan-hpp-5470.md           # Show specific plan status
+    $0 projectplan-NOTKT.md           # Show specific plan status
     $0 --plan path/to/plan.md            # Legacy syntax
 
 This is a read-only command that shows progress without making changes.

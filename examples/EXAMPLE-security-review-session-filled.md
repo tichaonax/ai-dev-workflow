@@ -49,7 +49,7 @@ For conducting security reviews, identifying vulnerabilities, and implementing s
 
 <!-- Define what's being reviewed -->
 
-**JIRA Ticket:** HPP-5619
+**Ticket:** HPP-5619
 
 **Review Type:**
 

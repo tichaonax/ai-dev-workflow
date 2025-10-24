@@ -8,7 +8,7 @@ This is your core operational playbook for end-to-end code tasks.
 
 1. When assigned a task, restate your understanding concisely.
 2. Identify all relevant code files, dependencies, and interrelations before proposing modifications.
-3. **🚨 REQUIRED: Create a task-specific plan document** using naming convention `projectplan-{jira-ticket}-{feature}-{date}.md`
+3. **🚨 REQUIRED: Create a task-specific plan document** using naming convention `projectplan-{ticket}-{feature}-{date}.md`
    - This is NOT optional - it's a critical deliverable for team collaboration
    - Must be created BEFORE writing any code OR using any tools that modify files
    - Must be presented to user for approval BEFORE execution begins
@@ -39,51 +39,71 @@ This is your core operational playbook for end-to-end code tasks.
 ### Phase 3: Documentation (Completion)
 
 13. Append a **Review Summary** section at the end of the plan document with key learnings and suggested improvements
-14. Mark final checkboxes in plan document to show 100% completion
-
-### MANDATORY MILESTONE APPROVAL PROCESS
-
-**CRITICAL:** After completing each phase in the project plan:
-
+14. Mark final checkboxes in plan document to ### :rotating_light: MANDATORY PHASE-BY-PHASE APPROVAL PROCESS
+**CRITICAL:** You MUST execute ONE phase at a time and wait for approval after EACH phase.
+**:x: NEVER do this:**
+- Execute Phase 1, 2, 3 in sequence without approval
+- Assume "approved plan" means "execute all phases"
+- Continue to next phase based on momentum or efficiency
+**:white_check_mark: ALWAYS do this:**
+- Execute ONLY the phase commanded (e.g., PHASE 1, PHASE 2)
+- Present detailed review after completing that ONE phase
+- STOP and wait for explicit approval before next phase
+- Wait for user to type: `PHASE 2`, `NEXT PHASE`, or `CONTINUE`
 **AI Instructions:**
-1. Complete one phase at a time
-2. Update project plan checkboxes
-3. Present design decisions and code overview
-4. Request explicit approval before next phase
-5. Share conversion examples before implementing
-
+1. **Execute ONE phase only** - the specific phase commanded by user
+2. **Update project plan checkboxes** for completed tasks in that phase
+3. **Present comprehensive review** with design decisions and code overview
+4. **Request explicit approval** before next phase
+5. **:octagonal_sign: STOP** - Do not proceed without explicit phase command
 **Process:**
-1. **Mark checkboxes complete** in the project plan document
+1. **Mark checkboxes complete** in the project plan document for current phase only
 2. **Present work summary** with:
-   - What was accomplished
+   - What was accomplished in THIS phase
    - Design decisions made and rationale
-   - Code changes overview
+   - Code changes overview (files created/modified)
+   - Key code snippets
    - Any deviations from original plan
-3. **Request explicit approval** with: "Phase X complete. Please review and approve before proceeding to Phase Y"
-4. **WAIT for explicit approval** - Do not proceed without "approved" or "proceed"
+3. **Request explicit approval** with: "Phase X complete. Please review and type 'PHASE Y' to continue."
+4. **:octagonal_sign: WAIT for explicit phase command** - Do not proceed without `PHASE 2`, `NEXT PHASE`, or similar command
 5. **If changes requested** - Make changes and repeat approval process
-
-**Format for milestone reviews:**
+**Format for phase reviews:**
 ```
-## 🔍 PHASE X REVIEW REQUEST
-
+## :mag: PHASE X REVIEW REQUEST
 **Completed Tasks:**
-- [List completed tasks]
-
+- :white_check_mark: Task X.1: [description]
+- :white_check_mark: Task X.2: [description]
+**Files Created:**
+- `path/to/file.js` (123 lines) - Brief purpose
+**Files Modified:**
+- `path/to/file.js` (+15 lines, -3 lines) - What changed
+**Key Code Snippet:**
+```javascript
+// Show 5-10 lines of most important code
+function criticalFunction() {
+  // Implementation
+}
+```
 **Design Decisions:**
-- [Explain key decisions and rationale]
-
-**Code Changes:**
-- [Summary of files modified and approach]
-
-**Next Phase:** [Brief description]
-
-❓ **APPROVAL REQUEST:** Please review Phase X work. Approve to proceed to Phase Y?
+- **Decision 1**: [What you decided] - **Rationale**: [Why you decided it]
+- **Decision 2**: [What you decided] - **Rationale**: [Why you decided it]
+**Issues Encountered:**
+- [Any problems, workarounds, or deviations]
+**Next Phase:** [Brief description of Phase X+1]
+---
+:question: **APPROVAL REQUIRED**
+Please review Phase X work above.
+**Type one of:**
+- `PHASE X+1` to continue to next phase
+- `NEXT PHASE` or `CONTINUE` to continue
+- `REVISE [details]` to request changes
+- `EXPLAIN [topic]` for clarification
+:octagonal_sign: **I will not proceed without your explicit command.**
 ```
 
 ## Task Tracking and Status Updates
 
-**CRITICAL:** The project plan document (projectplan-{jira-ticket}-{feature}-{date}.md) is the **single source of truth** for task status.
+**CRITICAL:** The project plan document (projectplan-{ticket}-{feature}-{date}.md) is the **single source of truth** for task status.
 
 **You MUST update checkboxes in the plan document as you complete each task:**
 
@@ -122,18 +142,18 @@ After completing backend API changes:
 
 **Every task MUST have its own dedicated plan document before any code is written.**
 
-**Format:** `projectplan-{jira-ticket}-{feature-name}-{YYYY-MM-DD}.md`
+**Format:** `projectplan-{ticket}-{feature-name}-{YYYY-MM-DD}.md`
 
 **Examples:**
 
-- `projectplan-HPP-1234-health-monitoring-2025-10-17.md` - For health status indicator feature with JIRA ticket HPP-1234
-- `projectplan-HPP-5678-user-auth-fix-2025-10-16.md` - For authentication bug fix with JIRA ticket HPP-5678
-- `projectplan-HPP-9012-vehicle-reports-2025-10-15.md` - For vehicle reporting feature with JIRA ticket HPP-9012
-- `projectplan-HPP-3456-tile-spacing-fix-2025-10-18.md` - For tile spacing bug fix with JIRA ticket HPP-3456
+- `projectplan-HPP-1234-health-monitoring-2025-10-17.md` - For health status indicator feature with ticket HPP-1234
+- `projectplan-HPP-5678-user-auth-fix-2025-10-16.md` - For authentication bug fix with ticket HPP-5678
+- `projectplan-HPP-9012-vehicle-reports-2025-10-15.md` - For vehicle reporting feature with ticket HPP-9012
+- `projectplan-HPP-3456-tile-spacing-fix-2025-10-18.md` - For tile spacing bug fix with ticket HPP-3456
 
-**JIRA Ticket Format Guidelines:**
-- Use the full JIRA ticket ID (e.g., `HPP-1234`, `HPP-5678`, `HPP-9012`)
-- If no JIRA ticket exists, use `NOTKT` as placeholder: `projectplan-NOTKT-feature-name-2025-10-18.md`
+**Ticket Format Guidelines:**
+- Use the full ticket ID (e.g., `HPP-1234`, `HPP-5678`, `HPP-9012`)
+- If no ticket exists, use `NOTKT` as placeholder: `projectplan-NOTKT-feature-name-2025-10-18.md`
 - For hotfixes or urgent tasks without tickets, use `HOTFIX`: `projectplan-HOTFIX-critical-bug-2025-10-18.md`
 
 ### Why This Is Critical (Especially for Team Projects)

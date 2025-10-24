@@ -55,7 +55,7 @@ For analyzing bugs, identifying causes, and proposing safe fixes.
 
 <!-- Document the bug details before starting -->
 
-**JIRA Ticket:** <!-- e.g., HPP-1234, or NOTKT if no ticket -->
+**Ticket:** <!-- e.g., HPP-1234, or NOTKT if no ticket -->
 
 **Bug Title:**
 

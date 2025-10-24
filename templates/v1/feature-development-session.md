@@ -51,7 +51,7 @@ For creating new features, screens, or endpoints with structured planning.
 
 <!-- Fill in your specific feature requirements before starting -->
 
-**JIRA Ticket:** <!-- e.g., HPP-1234, or NOTKT if no ticket -->
+**Ticket:** <!-- e.g., HPP-1234, or NOTKT if no ticket -->
 
 **Feature Name:**
 

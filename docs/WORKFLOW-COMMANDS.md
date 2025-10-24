@@ -10,19 +10,19 @@ Instead of explaining the full process each time, users can type simple commands
 
 ### **Task Management**
 
-#### `TASK START {jira-ticket} {description}`
+#### `TASK START {ticket} {description}`
 **Purpose:** Create new project plan and begin work
 **AI Actions:**
-1. Read user context file from `wip/{jira-ticket}-{description}.md`
-2. Create project plan: `project-plans/active/projectplan-{jira-ticket}-{description}-{date}.md`
+1. Read user context file from `wip/{ticket}-{description}.md`
+2. Create project plan: `project-plans/active/projectplan-{ticket}-{description}-{date}.md`
 3. Include all 8 required sections (overview, files, impact, checklist, risk, testing, rollback, review)
 4. Begin Phase 1 execution
 5. Confirm project plan created
 
 **Example:**
 ```
-User: "TASK START hpp-5470 tailwind-conversion"
-AI: ✅ Created projectplan-hpp-5470-tailwind-conversion-2025-10-21.md
+User: "TASK START NOTKT tailwind-conversion"
+AI: ✅ Created projectplan-NOTKT-tailwind-conversion-2025-10-21.md
     📁 Location: ai-contexts/project-plans/active/
     🎯 Beginning Phase 1: Setup and Dependencies
 ```
@@ -60,9 +60,9 @@ AI: ✅ Updated project plan:
 **Example:**
 ```
 User: "TASK COMPLETE"
-AI: ✅ Task HPP-5470 completed successfully!
+AI: ✅ Task NOTKT completed successfully!
     📁 Archived to: project-plans/completed/2025-10/
-    💾 Committed: "Complete HPP-5470: Convert 15 components to Tailwind CSS"
+    💾 Committed: "Complete NOTKT: Convert 15 components to Tailwind CSS"
     📊 Results: 15 components converted, -12KB bundle size, 100% tests passing
 ```
 

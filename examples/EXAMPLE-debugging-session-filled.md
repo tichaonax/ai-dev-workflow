@@ -55,7 +55,7 @@ For analyzing bugs, identifying causes, and proposing safe fixes.
 
 <!-- Document the bug details before starting -->
 
-**JIRA Ticket:** HPP-5821
+**Ticket:** HPP-5821
 
 **Bug Title:**
 Dashboard Stats Showing Incorrect Revenue Total After Project Transaction Created

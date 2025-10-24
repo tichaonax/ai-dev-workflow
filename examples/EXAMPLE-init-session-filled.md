@@ -44,7 +44,7 @@ Implement real-time application health monitoring with visual status indicator.
 
 ## 🚀 Session Objective
 
-**JIRA Ticket:** HPP-2451
+**Ticket:** HPP-2451
 
 **Goal:**
 Implement a health monitoring system that allows anyone (authenticated or not) to visually verify:
