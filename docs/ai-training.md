@@ -25,24 +25,30 @@ When using this workflow system, there's a natural "chicken and egg" problem:
 Copy this message to your AI assistant:
 
 ```
-👋 Hi Claude/ChatGPT/GitHub Copilot! Please read these context files to learn our development workflow:
+👋 Hi! Please read these files to learn our AI development workflow:
 
 📖 ai-contexts/contexts/master-context.md
 📖 ai-contexts/contexts/code-workflow.md
+📖 ai-contexts/custom/*.md (if any team-specific contexts exist)
 
-These files contain:
-- Workflow commands (TASK START, TASK STATUS, etc.)
-- Coding standards and conventions
-- Quality gates and approval processes
+These files teach you:
+- RESUME: Continue existing work after interruptions/handoffs
+- TASK START: Begin new feature or task
+- START: Create project plan and begin implementation
+- Approval checkpoints and project plan tracking
+- Team-specific standards and conventions (from custom/)
 
-After reading them, help me with: TASK START PROJECT-123 user-authentication
+What would you like to do?
+• RESUME - Continue existing work
+• TASK START <ticket> <description> - Start new work
 ```
 
 **Why this works:**
 - ✅ AI learns complete workflow in one session
+- ✅ Works for both NEW work and RESUMING work
 - ✅ Gets full context about your standards
 - ✅ Remembers commands for entire conversation
-- ✅ Can immediately use all workflow features
+- ✅ Can immediately use all workflow features (RESUME, TASK START, SYNC REQUIREMENTS, etc.)
 
 ---
 

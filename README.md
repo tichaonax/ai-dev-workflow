@@ -250,16 +250,22 @@ cp ai-contexts/integrations/vscode/ai-workflow-commands.code-snippets .vscode/
 
 ### Method 1: Manual Context Loading (Recommended)
 ```
-👋 Hi Claude/ChatGPT! Please read these files to learn our workflow:
+👋 Hi! Please read these files to learn our AI development workflow:
 
 📖 ai-contexts/contexts/master-context.md
 📖 ai-contexts/contexts/code-workflow.md
+📖 ai-contexts/custom/*.md (if any team-specific contexts exist)
 
-These files teach you our two-phase workflow:
-1. TASK START (template selection & requirements gathering)
-2. START (project plan creation & execution)
+These files teach you:
+- RESUME: Continue existing work after interruptions/handoffs
+- TASK START: Begin new feature or task
+- START: Create project plan and begin implementation
+- Approval checkpoints and project plan tracking
+- Team-specific standards and conventions (from custom/)
 
-Once you've read them, help me with: TASK START PROJECT-123 user-authentication
+What would you like to do?
+• RESUME - Continue existing work
+• TASK START <ticket> <description> - Start new work
 ```
 
 ### Method 2: Use VS Code Snippets (Instant Access)

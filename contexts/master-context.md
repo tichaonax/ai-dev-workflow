@@ -60,6 +60,75 @@ This is a hard requirement - no exceptions.
 
 ---
 
+## 📚 Custom Team Contexts (Auto-Load)
+
+**IMPORTANT:** After loading core framework contexts, automatically check for and load team-specific custom contexts.
+
+### Auto-Loading Custom Contexts
+
+1. **Check for custom folder:** Look for `ai-contexts/custom/` directory
+2. **List custom contexts:** Find all `.md` files in `custom/` (excluding `README.md`)
+3. **Auto-load if exists:** Read each custom context file automatically
+4. **Report loaded contexts:** Tell user which custom contexts were loaded
+
+### Custom Context Purpose
+
+Custom contexts contain **team-specific or company-specific** standards that extend the base framework:
+- Team coding standards and conventions
+- API design patterns specific to the company
+- Database naming conventions
+- Security requirements and policies
+- Deployment processes
+- Technology-specific patterns not in framework
+
+### Loading Order
+
+```
+1. ai-contexts/contexts/master-context.md (this file)
+2. ai-contexts/contexts/code-workflow.md
+3. ai-contexts/custom/*.md (all team custom contexts)
+4. Other framework contexts as needed (backend-api-context.md, etc.)
+```
+
+### Example Auto-Load Output
+
+```
+📚 Loading Contexts...
+
+Framework Contexts:
+✅ master-context.md - Workflow commands and principles
+✅ code-workflow.md - Development process and approval gates
+
+Custom Team Contexts:
+✅ custom/team-coding-standards.md - Company coding conventions
+✅ custom/api-design-patterns.md - Team API standards
+✅ custom/security-requirements.md - Company security policies
+
+All contexts loaded! Ready to work with team standards.
+```
+
+### Custom Context Priority
+
+- Custom contexts **extend** framework contexts (additive)
+- If custom context conflicts with framework, **custom takes precedence**
+- Custom contexts should clearly state when overriding framework defaults
+
+### No Custom Contexts
+
+If `custom/` folder is empty or doesn't exist:
+```
+📚 Loading Contexts...
+
+Framework Contexts:
+✅ master-context.md
+✅ code-workflow.md
+
+ℹ️ No custom team contexts found in ai-contexts/custom/
+Using framework defaults only.
+```
+
+---
+
 ## 🎯 Standardized AI Workflow Commands
 
 The following commands trigger standardized AI behaviors for common workflow operations:

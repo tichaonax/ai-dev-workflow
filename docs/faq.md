@@ -369,12 +369,22 @@ Benefits:
 
 **Fix:**
 ```
-👤 Please read these files:
-   1. ai-contexts/contexts/master-context.md
-   2. ai-contexts/contexts/code-workflow.md
+👤 Hi! Please read these files to learn our AI development workflow:
 
-These teach you our two-phase workflow.
-Once you've read them, help me with: TASK START {ticket} {desc}
+📖 ai-contexts/contexts/master-context.md
+📖 ai-contexts/contexts/code-workflow.md
+📖 ai-contexts/custom/*.md (if any team-specific contexts exist)
+
+These files teach you:
+- RESUME: Continue existing work after interruptions/handoffs
+- TASK START: Begin new feature or task
+- START: Create project plan and begin implementation
+- Approval checkpoints and project plan tracking
+- Team-specific standards and conventions (from custom/)
+
+What would you like to do?
+• RESUME - Continue existing work
+• TASK START <ticket> <description> - Start new work
 ```
 
 ### AI starts coding immediately instead of waiting for approval

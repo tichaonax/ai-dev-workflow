@@ -200,6 +200,14 @@ if [ -d "$TARGET_PROJECT/ai-contexts" ]; then
    echo -e "${BLUE}Creating backup: $BACKUP_NAME${NC}"
    run_mv "$TARGET_PROJECT/ai-contexts" "$TARGET_PROJECT/$BACKUP_NAME"
    echo "  ✓ Backup created at: $TARGET_PROJECT/$BACKUP_NAME"
+
+   # Preserve custom/ folder if it exists (team-specific contexts)
+   CUSTOM_BACKUP_DIR=""
+   if [ -d "$TARGET_PROJECT/$BACKUP_NAME/custom" ]; then
+      echo -e "${BLUE}Preserving custom team contexts...${NC}"
+      CUSTOM_BACKUP_DIR="$TARGET_PROJECT/$BACKUP_NAME/custom"
+      echo "  ✓ Custom contexts will be restored after installation"
+   fi
 fi
 
 echo ""
@@ -265,6 +273,7 @@ run_mkdir "$TARGET_PROJECT/ai-contexts/templates/v1"
 run_mkdir "$TARGET_PROJECT/ai-contexts/wip"
 run_mkdir "$TARGET_PROJECT/ai-contexts/project-plans/active"
 run_mkdir "$TARGET_PROJECT/ai-contexts/project-plans/completed"
+run_mkdir "$TARGET_PROJECT/ai-contexts/custom"
 echo "  ✓ Directory structure created"
 
 echo ""
@@ -352,7 +361,31 @@ run_cp "$SRC_ROOT/project-plans/active/.gitkeep" \
 run_cp "$SRC_ROOT/project-plans/completed/.gitkeep" \
    "$TARGET_PROJECT/ai-contexts/project-plans/completed/" 2>/dev/null || true
 
+# Copy custom/ folder files (.gitkeep and README.md)
+echo "  → Custom contexts folder"
+run_cp "$SRC_ROOT/custom/.gitkeep" \
+   "$TARGET_PROJECT/ai-contexts/custom/" 2>/dev/null || true
+run_cp "$SRC_ROOT/custom/README.md" \
+   "$TARGET_PROJECT/ai-contexts/custom/" 2>/dev/null || true
+
 echo "  ✓ Essential files copied"
+
+# Restore custom contexts from backup if they existed
+if [ -n "$CUSTOM_BACKUP_DIR" ] && [ -d "$CUSTOM_BACKUP_DIR" ]; then
+   echo ""
+   echo -e "${GREEN}Restoring custom team contexts from backup...${NC}"
+   # Copy all .md files except README.md from backup
+   for custom_file in "$CUSTOM_BACKUP_DIR"/*.md; do
+      if [ -f "$custom_file" ]; then
+         filename=$(basename "$custom_file")
+         if [ "$filename" != "README.md" ]; then
+            run_cp "$custom_file" "$TARGET_PROJECT/ai-contexts/custom/"
+            echo "  ✓ Restored: $filename"
+         fi
+      fi
+   done
+   echo "  ✓ Custom team contexts restored"
+fi
 
 echo ""
 echo -e "${GREEN}[4/5] Creating version tracking file...${NC}"
