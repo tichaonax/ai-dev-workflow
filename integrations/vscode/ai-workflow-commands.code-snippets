@@ -37,6 +37,55 @@
     ]
   },
 
+  "resume": {
+    "prefix": "resume",
+    "description": "Resume AI session and continue work from where it left off",
+    "body": [
+      "RESUME",
+      "",
+      "Please:",
+      "1. Load core contexts (master-context.md, code-workflow.md)",
+      "2. Find active project plan in ai-contexts/project-plans/active/",
+      "3. Read requirements from ai-contexts/wip/",
+      "4. Analyze completed vs pending tasks ([x] vs [ ])",
+      "5. Review recent git commits for context",
+      "6. Auto-detect and load relevant contexts",
+      "7. Check requirements-plan sync status",
+      "8. Present status summary with next task",
+      "9. Ask how to proceed (CONTINUE, REVIEW, REPLAN, TEST)"
+    ]
+  },
+
+  "resume-ticket": {
+    "prefix": "resume-ticket",
+    "description": "Resume specific project by ticket number",
+    "body": [
+      "RESUME ${1:TICKET-123}",
+      "",
+      "Please restore this specific project and show complete status."
+    ]
+  },
+
+  "continue": {
+    "prefix": "continue",
+    "description": "Continue implementation after RESUME",
+    "body": [
+      "CONTINUE",
+      "",
+      "Please proceed with the next task from the project plan."
+    ]
+  },
+
+  "review": {
+    "prefix": "review",
+    "description": "Review completed work after RESUME",
+    "body": [
+      "REVIEW",
+      "",
+      "Please show me detailed review of all completed work so far."
+    ]
+  },
+
   "task-update": {
     "prefix": "task-update",
     "description": "Request AI to update project plan checkboxes",

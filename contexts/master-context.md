@@ -144,6 +144,151 @@ Type `PHASE 1` to begin implementation of Phase 1, or request changes.
 🛑 I will not execute any code until you command a specific phase.
 ```
 
+### `RESUME`
+**Purpose:** Restore AI session after interruption, computer shutdown, or team handoff
+**When to Use:**
+- Starting new day after previous session
+- After computer shutdown/restart
+- Team member taking over project from another developer
+- Returning to project after days/weeks/months
+
+**AI Actions:**
+1. **Load Core Contexts**: Read `master-context.md` and `code-workflow.md` to relearn commands
+2. **Find Active Project**:
+   - If `RESUME {ticket}` provided: Find project plan matching ticket
+   - If `RESUME` alone: Search `ai-contexts/project-plans/active/` for active plans
+   - If multiple found: Show list and ask user to choose
+3. **Read Requirements**: Load `ai-contexts/wip/{ticket}-{description}.md`
+4. **Analyze Progress**:
+   - Count completed tasks ([x]) vs pending tasks ([ ])
+   - Identify current phase (first phase with unchecked tasks)
+   - Find next task (first unchecked [ ] task)
+5. **Review Git History**:
+   - Run `git log --oneline -10` on files mentioned in plan
+   - Run `git diff HEAD~5..HEAD` to understand recent changes
+   - Note last commit message and author
+6. **Auto-Detect Contexts**: Based on project type, load relevant contexts:
+   - API work → load `backend-api-context.md`
+   - React/components → load `component-context.md`
+   - Database → load `database-schema-context.md`
+7. **Check Sync Status**: Verify requirements-plan sync status
+8. **Present Comprehensive Status**: Show complete restoration summary
+9. **Ask How to Proceed**: Offer options (CONTINUE, REVIEW, REPLAN, TEST)
+
+**Example Response (Single Active Project):**
+```
+🔄 Resuming AI Development Session...
+
+📚 Contexts Loaded:
+✅ master-context.md - Workflow commands relearned
+✅ code-workflow.md - Development process loaded
+✅ backend-api-context.md - Auto-detected from project type
+
+📋 Active Project Plan:
+📁 projectplan-TICKET-123-user-auth-2025-10-24.md
+🎯 Feature: User authentication with JWT tokens
+📅 Started: 2025-10-24 09:00 AM
+📅 Last updated: 2025-10-24 16:45 PM
+
+📝 Requirements Context:
+📁 wip/TICKET-123-user-auth.md
+🔄 Sync Status: IN SYNC (last synced: 2025-10-24 10:25 AM)
+
+📊 Progress Summary:
+✅ Phase 1: Database Schema (COMPLETE - 5/5 tasks)
+✅ Phase 2: Authentication Endpoints (COMPLETE - 6/6 tasks)
+🔄 Phase 3: JWT Token Management (IN PROGRESS - 2/4 tasks)
+   ✅ Task 3.1: Implement JWT token generation
+   ✅ Task 3.2: Add token expiration logic
+   ⏳ Task 3.3: Create token refresh endpoint (NEXT)
+   ⏸️ Task 3.4: Add token validation middleware
+⏸️ Phase 4: Testing (NOT STARTED - 0/3 tasks)
+
+📂 Files Modified (from git):
+- src/models/User.ts (created)
+- src/routes/auth.ts (created)
+- src/middleware/auth.ts (modified)
+- src/utils/jwt.ts (created)
+
+💻 Last Commit:
+e716ac8 - "feat: Implement JWT token generation and expiration"
+Author: Developer A
+Date: 2025-10-24 16:45 PM
+
+🎯 Current Status:
+Phase 3 is 50% complete (2/4 tasks done)
+Next task: Task 3.3 - Create token refresh endpoint
+
+🔍 Code Context:
+I can see you've implemented:
+- User model with password hashing (bcrypt rounds=10)
+- Login/register endpoints with validation
+- JWT token generation with 24-hour expiration
+- Rate limiting: 5 failed attempts = lockout
+
+Ready to continue with Task 3.3 (token refresh endpoint).
+
+---
+
+✅ Session restored! I'm up to date with your progress.
+
+How would you like to proceed?
+1. CONTINUE - Resume implementation of Task 3.3
+2. REVIEW - Review completed work in detail
+3. REPLAN - Make changes to the plan
+4. TEST - Run tests on completed work
+
+Type: CONTINUE, REVIEW, REPLAN, or TEST
+```
+
+**Example Response (Multiple Active Projects):**
+```
+🔄 Multiple active projects found:
+
+1. 📋 projectplan-TICKET-123-user-auth-2025-10-24.md
+   📊 Progress: 60% (12/20 tasks)
+   📅 Last updated: 2025-10-24 16:45 PM
+   🎯 Next: Phase 3, Task 3.3 - Token refresh endpoint
+
+2. 📋 projectplan-TICKET-456-payment-gateway-2025-10-23.md
+   📊 Progress: 25% (5/20 tasks)
+   📅 Last updated: 2025-10-23 17:30 PM
+   🎯 Next: Phase 2, Task 2.1 - Stripe SDK setup
+
+Which project would you like to resume?
+Type: 1, 2, or RESUME TICKET-123
+```
+
+**Team Handoff Example:**
+```
+🔄 Resuming AI Development Session...
+
+👤 Previous Developer: Developer A (last commit: 2025-10-24 16:45)
+👤 Current Developer: Developer B (taking over)
+
+📋 Active Project: TICKET-123 User Authentication
+📊 Progress: 60% (12/20 tasks)
+🎯 Current Phase: Phase 3 - JWT Implementation
+⏳ Next Task: Task 3.3 - Create token refresh endpoint
+
+🎯 Handoff Notes:
+Developer A left off at Task 3.3 (token refresh endpoint).
+All tests passing for completed phases (Phases 1-2).
+No blockers noted in plan.
+
+✅ Session restored! Ready for you to continue where Developer A left off.
+
+How would you like to proceed?
+1. CONTINUE - Resume implementation
+2. REVIEW - Review what Developer A implemented
+3. TEST - Run tests on completed work
+```
+
+**Optional Parameters:**
+- `RESUME` - Resume most recent active project
+- `RESUME {ticket}` - Resume specific project by ticket (e.g., `RESUME TICKET-123`)
+- `RESUME {filename}` - Resume by exact project plan filename
+
 ### `PHASE 1` or `EXECUTE PHASE 1`
 **AI Actions:**
 1. **Execute Phase 1 Tasks ONLY** from the approved project plan

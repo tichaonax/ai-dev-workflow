@@ -286,12 +286,16 @@ Once you've read them, help me with: TASK START PROJECT-123 user-authentication
 ```bash
 # Essential commands you can copy-paste:
 
+# Session Management
+RESUME                                      # Resume work after interruption/handoff (NEW!)
+RESUME TICKET-123                           # Resume specific project (NEW!)
+
 # Phase 1: Setup & Requirements
 TASK START <ticket-id> <short-description>  # Choose template, create context file
 # (Fill in your requirements in the context file)
 START                                       # Create project plan & begin work
 
-# Requirements-Plan Synchronization (NEW!)
+# Requirements-Plan Synchronization
 SYNC REQUIREMENTS                           # Update requirements to match plan
 REPLAN                                      # Re-analyze requirements, update plan
 APPROVE PLAN                                # Lock plan and begin implementation
@@ -302,6 +306,10 @@ TASK STATUS                                 # Check progress
 TASK UPDATE                                 # Mark completed tasks
 TASK COMPLETE                               # Archive completed project
 MOVE USER CONTEXT                           # Archive context file
+
+# After RESUME
+CONTINUE                                    # Continue with next task (NEW!)
+REVIEW                                      # Review completed work (NEW!)
 ```
 
 **💡 Pro Tip:** After the first session, AI will remember the commands for the rest of that conversation!
@@ -318,7 +326,8 @@ MOVE USER CONTEXT                           # Archive context file
 
 ### Using the System
 - **[Complete Workflow Guide](docs/complete-workflow.md)** - Step-by-step two-phase process
-- **[Requirements-Plan Sync](docs/requirements-sync-workflow.md)** - Keep requirements and plans aligned (NEW!)
+- **[Requirements-Plan Sync](docs/requirements-sync-workflow.md)** - Keep requirements and plans aligned
+- **[Session Restoration & Handoff](docs/session-restoration-handoff.md)** - Resume work after interruptions (NEW!)
 - **[Best Practices](docs/best-practices.md)** - Tips from experienced users
 - **[Templates Guide](templates/README.md)** - How to use templates
 - **[Examples](examples/)** - Real-world examples

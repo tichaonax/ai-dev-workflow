@@ -8,6 +8,69 @@ Instead of explaining the full workflow every time, users can use simple command
 
 ## 📋 Core Commands Reference
 
+### **Session Management Commands**
+
+#### `RESUME`
+**Purpose:** Restore AI session after interruption, computer shutdown, or team handoff
+**AI Actions:**
+1. Load core contexts (`master-context.md`, `code-workflow.md`)
+2. Find active project plan in `ai-contexts/project-plans/active/`
+3. Read requirements context from `ai-contexts/wip/`
+4. Analyze completed ([x]) vs pending ([ ]) tasks
+5. Identify current phase and next task
+6. Review recent git commits (last 10) for context
+7. Auto-detect and load relevant contexts based on project type
+8. Check requirements-plan sync status
+9. Present comprehensive status summary
+10. Ask how to proceed (CONTINUE, REVIEW, REPLAN, TEST)
+
+**Variants:**
+- `RESUME` - Resume most recent active project
+- `RESUME {ticket}` - Resume specific project by ticket (e.g., `RESUME TICKET-123`)
+- `RESUME {filename}` - Resume by exact project plan filename
+
+**Example:**
+```
+User: "RESUME"
+AI: 🔄 Resuming AI Development Session...
+
+    📚 Contexts Loaded:
+    ✅ master-context.md
+    ✅ code-workflow.md
+    ✅ backend-api-context.md (auto-detected)
+
+    📋 Active Project: TICKET-123 User Authentication
+    📊 Progress: 60% (12/20 tasks)
+    🎯 Current Phase: Phase 3 - JWT Implementation
+    ⏳ Next Task: Task 3.3 - Create token refresh endpoint
+
+    ✅ Session restored! Ready to continue.
+
+    How would you like to proceed?
+    1. CONTINUE - Resume implementation
+    2. REVIEW - Review completed work
+    3. REPLAN - Make changes to plan
+    4. TEST - Run tests on completed work
+```
+
+#### `CONTINUE`
+**Purpose:** Resume implementation after RESUME command
+**AI Actions:**
+1. Identify next unchecked task from project plan
+2. Execute that task (code, tests, documentation)
+3. Update project plan checkboxes
+4. Present work summary
+5. Ask for approval before next task
+
+#### `REVIEW`
+**Purpose:** Review all completed work in detail
+**AI Actions:**
+1. List all completed tasks ([x] checkboxes)
+2. Show code snippets from completed work
+3. Explain architectural decisions made
+4. Highlight any TODOs or notes
+5. Present summary for user understanding
+
 ### **Task Management Commands**
 
 #### `TASK START {ticket} {description}`
@@ -314,6 +377,12 @@ AI: ⚠️ Warning: This will reset implementation progress.
 ```
 📋 AI Workflow Commands
 
+SESSION MANAGEMENT:
+  RESUME                      - Restore session after interruption/handoff
+  RESUME {ticket}             - Resume specific project by ticket
+  CONTINUE                    - Continue implementation after RESUME
+  REVIEW                      - Review completed work in detail
+
 TASK MANAGEMENT:
   TASK START {ticket} {desc}  - Create project plan and begin work
   TASK UPDATE                 - Update progress and checkboxes
@@ -455,6 +524,10 @@ Planned executable commands:
 
 | Command | Purpose | Result |
 |---------|---------|--------|
+| `RESUME` | Restore session | Loads contexts, shows status |
+| `RESUME {ticket}` | Resume specific project | Restores by ticket |
+| `CONTINUE` | Resume implementation | Continues next task |
+| `REVIEW` | Review completed work | Shows detailed review |
 | `TASK START {ticket} {desc}` | Begin new work | Creates project plan |
 | `TASK UPDATE` | Show progress | Updates checkboxes |
 | `TASK COMPLETE` | Finish work | Archives & commits |
