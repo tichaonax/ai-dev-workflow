@@ -238,6 +238,85 @@
     ]
   },
 
+  "sync-requirements": {
+    "prefix": "sync-req",
+    "description": "Update requirements context to match project plan",
+    "body": [
+      "SYNC REQUIREMENTS",
+      "",
+      "Please:",
+      "1. Read current project plan in ai-contexts/project-plans/active/",
+      "2. Extract all requirements, constraints, and implementation details from analysis",
+      "3. Update requirements context file in ai-contexts/wip/",
+      "4. Show diff of what was added/updated in requirements",
+      "5. Mark sync timestamp in both files",
+      "6. Confirm requirements now match project plan"
+    ]
+  },
+
+  "replan": {
+    "prefix": "replan",
+    "description": "Re-analyze requirements and update project plan",
+    "body": [
+      "REPLAN",
+      "",
+      "Please:",
+      "1. Read updated requirements context from ai-contexts/wip/",
+      "2. Perform fresh impact analysis",
+      "3. Update project plan in ai-contexts/project-plans/active/",
+      "4. Show what changed (added tasks, updated estimates, new risks)",
+      "5. Mark as needing sync review",
+      "6. Recommend running SYNC REQUIREMENTS after review"
+    ]
+  },
+
+  "approve-plan": {
+    "prefix": "approve-plan",
+    "description": "Lock requirements and plan, begin implementation",
+    "body": [
+      "APPROVE PLAN",
+      "",
+      "Please:",
+      "1. Check if requirements and plan are in sync (compare timestamps)",
+      "2. If not synced, prompt to run SYNC REQUIREMENTS first",
+      "3. If synced, show plan summary (phases, tasks, estimates, risks)",
+      "4. Mark plan as 'Approved' and lock it",
+      "5. Begin Phase 1 implementation",
+      "6. Update project plan with approval timestamp"
+    ]
+  },
+
+  "plan-status": {
+    "prefix": "plan-status",
+    "description": "Check synchronization status and plan details",
+    "body": [
+      "PLAN STATUS",
+      "",
+      "Please:",
+      "1. Show last modification times for requirements and plan",
+      "2. Check if sync is needed (compare timestamps)",
+      "3. Display plan progress (phases completed, tasks done)",
+      "4. Show any warnings or recommendations",
+      "5. Display current task and next task"
+    ]
+  },
+
+  "unlock-plan": {
+    "prefix": "unlock-plan",
+    "description": "Reset to planning phase (emergency scope change)",
+    "body": [
+      "UNLOCK PLAN",
+      "",
+      "Please:",
+      "1. Warn that implementation progress will be reset",
+      "2. Show current progress that will be lost",
+      "3. Require confirmation",
+      "4. If confirmed, unlock plan and reset to planning phase",
+      "5. Allow REPLAN and SYNC REQUIREMENTS again",
+      "6. Mark plan as 'Unlocked' with reason and timestamp"
+    ]
+  },
+
   "show-commands": {
     "prefix": "show-commands",
     "description": "Display all available workflow commands",

@@ -67,6 +67,117 @@ AI: ✅ Created projectplan-NOTKT-tailwind-conversion-2025-10-21.md
 6. Highlight any blockers or dependencies
 7. Suggest immediate next steps
 
+### **Requirements-Plan Synchronization Commands**
+
+#### `SYNC REQUIREMENTS`
+**Purpose:** Update requirements context to match current project plan
+**AI Actions:**
+1. Read current project plan in `ai-contexts/project-plans/active/`
+2. Extract all requirements, constraints, and implementation details from analysis
+3. Update requirements context file in `ai-contexts/wip/`
+4. Show diff of what was added/updated in requirements
+5. Mark sync timestamp in both files
+6. Confirm requirements now match project plan
+
+**Example:**
+```
+User: "SYNC REQUIREMENTS"
+AI: 📋 Syncing requirements with project plan...
+
+    ✅ Added to requirements:
+    - JWT token expiration: 24 hours
+    - Password requirements: min 8 chars, 1 uppercase, 1 number
+    - Rate limiting: 5 failed attempts = lockout
+
+    ✅ Requirements now match project plan!
+```
+
+#### `REPLAN`
+**Purpose:** Re-analyze requirements and update project plan
+**AI Actions:**
+1. Read updated requirements context from `ai-contexts/wip/`
+2. Perform fresh impact analysis
+3. Update project plan in `ai-contexts/project-plans/active/`
+4. Show what changed (added tasks, updated estimates, new risks)
+5. Mark as needing sync review
+6. Recommend running SYNC REQUIREMENTS after review
+
+**Example:**
+```
+User: [Updates requirements manually]
+User: "REPLAN"
+AI: 📋 Re-analyzing requirements...
+
+    ✅ Added 3 new tasks for OAuth integration
+    ⏱️ Estimated time increased by 2 hours
+
+    ⚠️ Run SYNC REQUIREMENTS to update requirements with analysis details
+```
+
+#### `APPROVE PLAN`
+**Purpose:** Lock requirements and plan, begin implementation
+**AI Actions:**
+1. Check if requirements and plan are in sync (compare timestamps)
+2. If not synced, prompt user to run SYNC REQUIREMENTS first
+3. If synced, show plan summary (phases, tasks, estimates, risks)
+4. Mark plan as "Approved" and lock it
+5. Begin Phase 1 implementation
+6. Update project plan with approval timestamp
+
+**Example:**
+```
+User: "APPROVE PLAN"
+AI: ✅ Synchronization verified!
+    🔒 Plan approved and locked!
+
+    📋 Plan Summary:
+    - 4 Phases, 18 tasks
+    - Estimated: 2.5 days
+
+    🚀 Starting Phase 1: Database Schema Setup
+```
+
+#### `PLAN STATUS`
+**Purpose:** Check synchronization status and plan details
+**AI Actions:**
+1. Show last modification times for requirements and plan
+2. Check if sync is needed (compare timestamps)
+3. Display plan progress (phases completed, tasks done)
+4. Show any warnings or recommendations
+5. Display current task and next task
+
+**Example:**
+```
+User: "PLAN STATUS"
+AI: 📊 Project Plan Status
+
+    🔄 Synchronization:
+    ✅ Status: IN SYNC
+    ✅ Last synced: 2025-10-24 10:25 AM
+
+    📈 Progress: 22% complete (4/18 tasks)
+    🎯 Current: Phase 1, Task 1.5
+```
+
+#### `UNLOCK PLAN`
+**Purpose:** Reset to planning phase (emergency scope change)
+**AI Actions:**
+1. Warn user that implementation progress will be reset
+2. Show current progress that will be lost
+3. Require confirmation
+4. If confirmed, unlock plan and reset to planning phase
+5. Allow REPLAN and SYNC REQUIREMENTS again
+6. Mark plan as "Unlocked" with reason and timestamp
+
+**Example:**
+```
+User: "UNLOCK PLAN"
+AI: ⚠️ Warning: This will reset implementation progress.
+    Phase 1: 80% complete will be lost
+
+    Are you sure? (yes/no)
+```
+
 ### **File Management Commands**
 
 #### `MOVE USER CONTEXT`
@@ -209,6 +320,13 @@ TASK MANAGEMENT:
   TASK COMPLETE               - Archive completed work with documentation
   TASK STATUS                 - Show current progress and next steps
 
+REQUIREMENTS-PLAN SYNC:
+  SYNC REQUIREMENTS           - Update requirements to match project plan
+  REPLAN                      - Re-analyze requirements and update plan
+  APPROVE PLAN                - Lock requirements/plan and begin implementation
+  PLAN STATUS                 - Check synchronization status
+  UNLOCK PLAN                 - Reset to planning phase (emergency)
+
 FILE MANAGEMENT:
   MOVE USER CONTEXT           - Archive context file with project plan
   ARCHIVE PROJECT             - Archive both plan and context together
@@ -234,6 +352,7 @@ HELP:
 
 ## 🔄 Typical Command Workflow
 
+### Basic Workflow (Without Sync)
 ```
 1. User: "TASK START NOTKT tailwind-conversion"
    AI: Creates project plan, ready for Phase 1
@@ -243,7 +362,7 @@ HELP:
    AI: Updates checkboxes, shows progress
 
 3. User: continues work...
-   User: "TASK STATUS" 
+   User: "TASK STATUS"
    AI: Shows 65% complete, next 3 tasks
 
 4. User: completes all work...
@@ -252,6 +371,42 @@ HELP:
 
 5. User: "MOVE USER CONTEXT"
    AI: Archives context file with project plan
+```
+
+### Complete Workflow (With Requirements-Plan Sync)
+```
+1. User: "TASK START TICKET-123 user-authentication"
+   AI: Creates requirements context file in wip/
+
+2. User: Fills in basic requirements
+   User: "START"
+   AI: Creates project plan with analysis
+
+3. User: Reviews plan, asks questions, suggests changes
+   AI: Updates project plan with feedback
+
+4. User: "SYNC REQUIREMENTS"
+   AI: Updates requirements to match analyzed plan details
+
+5. User: Adds new requirement to wip/ file
+   User: "REPLAN"
+   AI: Re-analyzes requirements, updates plan
+
+6. User: "SYNC REQUIREMENTS"
+   AI: Syncs requirements with updated plan analysis
+
+7. User: "PLAN STATUS"
+   AI: Shows IN SYNC status, ready for implementation
+
+8. User: "APPROVE PLAN"
+   AI: Locks plan, begins Phase 1 implementation
+
+9. User: works through phases...
+   User: "TASK UPDATE"
+   AI: Updates checkboxes, shows progress
+
+10. User: "TASK COMPLETE"
+    AI: Archives plan and context, commits documentation
 ```
 
 ## 💡 Command Best Practices
@@ -304,6 +459,11 @@ Planned executable commands:
 | `TASK UPDATE` | Show progress | Updates checkboxes |
 | `TASK COMPLETE` | Finish work | Archives & commits |
 | `TASK STATUS` | Check progress | Shows completion % |
+| `SYNC REQUIREMENTS` | Update requirements to match plan | Syncs wip/ with plan |
+| `REPLAN` | Re-analyze and update plan | Updates plan from requirements |
+| `APPROVE PLAN` | Lock plan and start coding | Locks requirements & plan |
+| `PLAN STATUS` | Check sync status | Shows sync state |
+| `UNLOCK PLAN` | Emergency scope change | Resets to planning |
 | `MOVE USER CONTEXT` | Archive context | Moves wip/ → completed/ |
 | `ARCHIVE PROJECT` | Archive all | Moves both files |
 | `CLEAN WIP` | Clean workspace | Removes old files |

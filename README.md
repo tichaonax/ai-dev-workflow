@@ -274,6 +274,10 @@ Once you've read them, help me with: TASK START PROJECT-123 user-authentication
 - Type `ai-train` + Tab → AI training message (first time setup)
 - Type `task-start` + Tab → Full TASK START command
 - Type `start` + Tab → START command (after filling requirements)
+- Type `sync-req` + Tab → SYNC REQUIREMENTS command (NEW!)
+- Type `replan` + Tab → REPLAN command (NEW!)
+- Type `approve-plan` + Tab → APPROVE PLAN command (NEW!)
+- Type `plan-status` + Tab → PLAN STATUS command (NEW!)
 - Type `task-status` + Tab → TASK STATUS command
 - Type `move-context` + Tab → MOVE USER CONTEXT command
 - Type `task-complete` + Tab → TASK COMPLETE command
@@ -286,6 +290,12 @@ Once you've read them, help me with: TASK START PROJECT-123 user-authentication
 TASK START <ticket-id> <short-description>  # Choose template, create context file
 # (Fill in your requirements in the context file)
 START                                       # Create project plan & begin work
+
+# Requirements-Plan Synchronization (NEW!)
+SYNC REQUIREMENTS                           # Update requirements to match plan
+REPLAN                                      # Re-analyze requirements, update plan
+APPROVE PLAN                                # Lock plan and begin implementation
+PLAN STATUS                                 # Check sync status
 
 # Progress Management
 TASK STATUS                                 # Check progress
@@ -308,6 +318,7 @@ MOVE USER CONTEXT                           # Archive context file
 
 ### Using the System
 - **[Complete Workflow Guide](docs/complete-workflow.md)** - Step-by-step two-phase process
+- **[Requirements-Plan Sync](docs/requirements-sync-workflow.md)** - Keep requirements and plans aligned (NEW!)
 - **[Best Practices](docs/best-practices.md)** - Tips from experienced users
 - **[Templates Guide](templates/README.md)** - How to use templates
 - **[Examples](examples/)** - Real-world examples
@@ -381,15 +392,16 @@ examples/
 
 ## 🎬 How It Works
 
-### The Workflow (3 Steps)
+### The Workflow (4 Steps)
 
 | Step | What Happens | Key Actions |
 |:----:|:-------------|:------------|
 | **1. Load Contexts** | AI reads your standards and conventions | • `master-context.md` - Core principles<br>• `code-workflow.md` - Workflow rules<br>• Your custom contexts - Project standards |
 | **2. Create Plan** | AI creates detailed project plan with approval gates | • All 8 required sections included<br>• To-Do Checklist with atomic tasks<br>• Risk Assessment & Rollback Plan<br>⏸️ **Wait for approval** before coding |
-| **3. Implement** | AI codes incrementally, phase by phase | • Implements Phase 1 with tests<br>⏸️ **Wait for approval** after each phase<br>• Updates checkboxes as tasks complete<br>• Repeats until all phases done |
+| **3. Sync Requirements** | Requirements and plan are synchronized | • **SYNC REQUIREMENTS** - Update requirements to match plan<br>• **REPLAN** - Update plan based on new requirements<br>• **APPROVE PLAN** - Lock both for implementation<br>⏸️ **Ensures QA has complete requirements** |
+| **4. Implement** | AI codes incrementally, phase by phase | • Implements Phase 1 with tests<br>⏸️ **Wait for approval** after each phase<br>• Updates checkboxes as tasks complete<br>• Repeats until all phases done |
 
-### Example Session (Two-Phase Workflow)
+### Example Session (Complete Workflow with Sync)
 
 ```markdown
 YOU: Load master-context.md and code-workflow.md first.
@@ -409,20 +421,53 @@ AI:  ✅ Created context file: ai-contexts/wip/PROJECT-123-user-authentication.m
 
      Please fill in your requirements and type START when ready.
 
-YOU: [Fills requirements in context file]
+YOU: [Fills basic requirements in context file]
      START
 
 AI:  ✅ Reading requirements...
 
-     📋 PROJECT PLAN:
+     📋 PROJECT PLAN CREATED:
      Phase 1: Create user model and database schema
+       - Task 1.1: Create users table with email, password_hash columns
+       - Task 1.2: Add JWT token expiration (24 hours)
      Phase 2: Implement authentication endpoints (login, register)
+       - Task 2.1: POST /auth/register endpoint
+       - Task 2.2: POST /auth/login endpoint with rate limiting (5 attempts)
      Phase 3: Add JWT token generation and validation
      Phase 4: Write unit tests and integration tests
 
-     ⏸️ Approval required to proceed.
+     ⏸️ Plan created. Review and make changes, or continue with sync.
 
-YOU: Looks good! Proceed with Phase 1.
+YOU: What about password requirements?
+
+AI:  Good catch! I'll add password validation requirements:
+     - Minimum 8 characters
+     - At least 1 uppercase letter
+     - At least 1 number
+     Updated plan with Task 2.3: Add password strength validation.
+
+YOU: Perfect! SYNC REQUIREMENTS
+
+AI:  📋 Syncing requirements with project plan...
+
+     ✅ Added to requirements (wip/PROJECT-123-user-authentication.md):
+     - JWT token expiration: 24 hours
+     - Password requirements: min 8 chars, 1 uppercase, 1 number
+     - Rate limiting: 5 failed login attempts = lockout
+     - Database schema: users table with email, password_hash, locked_until columns
+
+     ✅ Requirements now match project plan!
+
+YOU: APPROVE PLAN
+
+AI:  ✅ Synchronization verified!
+     🔒 Plan approved and locked!
+
+     🚀 Starting Phase 1: Database Schema
+
+     ⏸️ Approval required to begin implementation.
+
+YOU: Proceed with Phase 1.
 
 AI:  🔧 Implementing Phase 1...
      [Shows code changes]
@@ -435,10 +480,11 @@ YOU: Phase 1 approved. Proceed with Phase 2.
 [... continues with approvals ...]
 
 AI:  ✅ All phases complete!
-     - Code implemented
+     - Code implemented with requirements
      - Tests passing
      - Documentation generated
      - Project plan updated
+     - Requirements synchronized for QA
 ```
 
 ---

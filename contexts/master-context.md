@@ -307,6 +307,251 @@ Phase 2: Components [2/5] 🔄 In Progress
 4. Move to completed/ or delete based on user preference
 5. Confirm wip/ folder cleaned up
 
+## Requirements-Plan Synchronization Commands
+
+### `SYNC REQUIREMENTS`
+**Purpose:** Update requirements context to match current project plan
+**When:** After creating/modifying project plan, before starting implementation
+
+**AI Actions:**
+1. Read current project plan in `ai-contexts/project-plans/active/`
+2. Extract all requirements, constraints, and implementation details from analysis
+3. Update requirements context file in `ai-contexts/wip/`
+4. Show diff of what was added/updated in requirements
+5. Mark sync timestamp in both files
+6. Confirm requirements now match project plan
+
+**Example Response:**
+```
+📋 Syncing requirements with project plan...
+
+Reading: projectplan-TICKET-123-user-auth-2025-10-24.md
+Updating: wip/TICKET-123-user-auth.md
+
+📝 Changes to Requirements:
+
+✅ Added:
+- JWT token expiration: 24 hours (from Phase 2 analysis)
+- Password strength: min 8 chars, 1 uppercase, 1 number
+- Rate limiting: 5 failed attempts = 15min lockout
+- Database: users table needs 'locked_until' column
+
+✏️ Updated:
+- Success Criteria: Added "passwords must be hashed with bcrypt rounds=10"
+- Testing Requirements: Added integration tests for lockout
+
+🔍 Review updated requirements?
+wip/TICKET-123-user-auth.md
+
+✅ Requirements now match project plan. Ready to proceed!
+```
+
+### `REPLAN`
+**Purpose:** Re-analyze requirements and update project plan
+**When:** After user manually updates requirements with new ideas/scope changes
+
+**AI Actions:**
+1. Read updated requirements context from `ai-contexts/wip/`
+2. Perform fresh impact analysis
+3. Update project plan in `ai-contexts/project-plans/active/`
+4. Show what changed in the plan (added tasks, updated estimates, new risks)
+5. Mark as needing sync review
+6. Recommend running SYNC REQUIREMENTS after review
+
+**Example Response:**
+```
+📋 Re-analyzing requirements...
+
+Reading: wip/TICKET-123-user-auth.md
+Updating: projectplan-TICKET-123-user-auth-2025-10-24.md
+
+📝 Changes to Project Plan:
+
+✅ Added Tasks:
+- Phase 2, Task 2.5: Integrate Google OAuth2 library
+- Phase 2, Task 2.6: Create /auth/google/callback endpoint
+- Phase 4, Task 4.5: Test Google login flow
+
+✏️ Updated:
+- Risk Assessment: Added dependency on Google OAuth service
+- Testing Plan: Added OAuth integration tests
+- Files Affected: Added oauth-config.ts
+
+⚠️ Impact: +2 hours estimated time
+
+📊 Updated Plan Status:
+- Phases: 4 → 4 (unchanged)
+- Tasks: 15 → 18 (+3 tasks)
+- Estimated Time: 2 days → 2.5 days
+
+🔍 Review updated plan?
+projectplan-TICKET-123-user-auth-2025-10-24.md
+
+⚠️ Requirements and plan may be out of sync.
+Run SYNC REQUIREMENTS after reviewing changes.
+```
+
+### `APPROVE PLAN`
+**Purpose:** Lock requirements and plan, begin implementation
+**When:** After requirements and plan are synchronized and finalized
+
+**AI Actions:**
+1. Check if requirements and plan are in sync (compare timestamps)
+2. If not synced, prompt user to run SYNC REQUIREMENTS first
+3. If synced, show plan summary (phases, tasks, estimates, risks)
+4. Mark plan as "Approved" and lock it
+5. Begin Phase 1 implementation
+6. Update project plan with approval timestamp
+
+**Example Response (Not Synced):**
+```
+✅ Checking synchronization status...
+
+Requirements: wip/TICKET-123-user-auth.md
+Last modified: 2025-10-24 10:15 AM
+
+Project Plan: projectplan-TICKET-123-user-auth-2025-10-24.md
+Last modified: 2025-10-24 10:20 AM
+
+⚠️ Plan was modified after requirements.
+
+Would you like to SYNC REQUIREMENTS first?
+This ensures QA has complete requirements.
+
+Options:
+1. SYNC REQUIREMENTS (recommended)
+2. APPROVE ANYWAY (skip sync)
+3. CANCEL (review plan first)
+```
+
+**Example Response (Synced):**
+```
+✅ Synchronization verified!
+
+Requirements and plan last synced: 2025-10-24 10:25 AM
+No changes since sync.
+
+📋 Plan Summary:
+- 4 Phases
+- 18 Tasks
+- Estimated: 2.5 days
+- All risks documented
+- Tests planned
+
+🔒 Locking plan for implementation...
+
+✅ Plan approved and locked!
+
+🚀 Starting Phase 1: Database Schema Setup
+
+Phase 1 Tasks:
+- [1.1] Create users table
+- [1.2] Add authentication columns
+- [1.3] Create migration script
+
+Proceeding with Task 1.1...
+```
+
+### `PLAN STATUS`
+**Purpose:** Check synchronization status and plan details
+**When:** Anytime during planning phase
+
+**AI Actions:**
+1. Show last modification times for requirements and plan
+2. Check if sync is needed (compare timestamps)
+3. Display plan progress (phases completed, tasks done)
+4. Show any warnings or recommendations
+5. Display current task and next task
+
+**Example Response (In Sync):**
+```
+📊 Project Plan Status
+
+📋 Plan: projectplan-TICKET-123-user-auth-2025-10-24.md
+📝 Requirements: wip/TICKET-123-user-auth.md
+
+🔄 Synchronization:
+✅ Last synced: 2025-10-24 10:25 AM
+✅ Requirements: No changes since sync
+✅ Plan: No changes since sync
+✅ Status: IN SYNC
+
+📈 Progress:
+- Phase 1: [████████░░] 80% (4/5 tasks)
+- Phase 2: [░░░░░░░░░░] 0% (0/6 tasks)
+- Phase 3: [░░░░░░░░░░] 0% (0/4 tasks)
+- Phase 4: [░░░░░░░░░░] 0% (0/3 tasks)
+
+Overall: 22% complete (4/18 tasks)
+
+🎯 Current: Phase 1, Task 1.5 - Test user table creation
+⏭️ Next: Phase 2, Task 2.1 - Implement registration endpoint
+
+✅ Ready to proceed!
+```
+
+**Example Response (Out of Sync):**
+```
+📊 Project Plan Status
+
+📋 Plan: projectplan-TICKET-123-user-auth-2025-10-24.md
+📝 Requirements: wip/TICKET-123-user-auth.md
+
+🔄 Synchronization:
+⚠️ Last synced: 2025-10-24 09:00 AM
+⚠️ Requirements: Modified 10:15 AM (75 min ago)
+⚠️ Plan: Modified 10:20 AM (70 min ago)
+❌ Status: OUT OF SYNC
+
+🔍 Detected Changes:
+- Requirements: Added OAuth requirement
+- Plan: Added 3 new tasks for OAuth
+
+⚠️ Recommendation: Run SYNC REQUIREMENTS before implementation
+
+📈 Progress:
+Overall: 0% complete (0/18 tasks)
+
+🎯 Status: Planning phase
+⏭️ Next: Sync requirements, then APPROVE PLAN
+```
+
+### `UNLOCK PLAN`
+**Purpose:** Reset to planning phase (emergency scope change mid-implementation)
+**When:** Need to change scope after plan is locked
+
+**AI Actions:**
+1. Warn user that implementation progress will be reset
+2. Show current progress that will be lost
+3. Require confirmation
+4. If confirmed, unlock plan and reset to planning phase
+5. Allow REPLAN and SYNC REQUIREMENTS again
+6. Mark plan as "Unlocked" with reason and timestamp
+
+**Example Response:**
+```
+⚠️ Warning: This will reset implementation progress.
+
+Current progress will be lost:
+- Phase 1: 80% complete (4/5 tasks)
+- Phase 2: 20% complete (1/6 tasks)
+
+Are you sure? (yes/no)
+
+[User: yes]
+
+✅ Plan unlocked.
+⚠️ Progress reset to planning phase.
+
+You can now:
+- Update requirements
+- REPLAN
+- SYNC REQUIREMENTS
+- APPROVE PLAN again
+
+Note: Completed code is not deleted, only plan progress is reset.
+```
+
 ## Reporting Commands
 
 ### `DOCUMENT WORK`
