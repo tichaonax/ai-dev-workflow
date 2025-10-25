@@ -91,7 +91,8 @@ Real metrics from teams using this workflow:
 
 - **Context Documents** - Teach AI your standards, patterns, and conventions
 - **Workflow Engine** - Enforce planning and approval checkpoints
-- **Session Templates** - 9 pre-configured templates for different tasks
+- **Session Templates** - 9 pre-configured templates for different problem domains
+- **Session Framework** - Bounded interactions that maintain continuity and track progress
 
 ### 📋 Session Templates (9 Templates)
 
@@ -338,6 +339,7 @@ SHOW SNIPPETS                               # Display all VS Code snippets (NEW!
 - **[AI Training Guide](docs/ai-training.md)** - How to teach AI the workflow commands
 - **[Installation](docs/installation.md)** - Detailed setup (4 methods)
 - **[Core Concepts](docs/concepts.md)** - Understand the system
+- **[Sessions & Templates](#-core-concepts-sessions--templates)** - Fundamental definitions (in this README)
 
 ### Using the System
 - **[Complete Workflow Guide](docs/complete-workflow.md)** - Step-by-step two-phase process
@@ -356,6 +358,99 @@ SHOW SNIPPETS                               # Display all VS Code snippets (NEW!
 - **[FAQ](docs/faq.md)** - Common questions
 - **[Troubleshooting](docs/troubleshooting.md)** - Fix issues
 - **[GitHub Discussions](https://github.com/tichaonax/ai-dev-workflow/discussions)** - Ask questions
+
+---
+
+## 📖 Core Concepts: Sessions & Templates
+
+Understanding the fundamental building blocks of this workflow system:
+
+### 🎯 What is a Session?
+
+A **session** is a bounded conversational interaction between you and an AI system, initiated around a specific problem or context. It maintains continuity of thought, state, and reference materials until the objective is resolved or naturally concludes.
+
+**Key Characteristics:**
+- **Bounded scope** - Focused on solving one specific problem or task
+- **Maintains continuity** - Preserves conversation history, decisions, and progress
+- **Context-driven** - Initiated with a specific problem domain in mind
+- **Traceable** - All inputs, outputs, and intermediate steps are documented
+- **Fundamental unit** - The basic building block of structured AI collaboration
+
+**In Practice:**
+When you run `TASK START TICKET-123 user-authentication`, you're creating a session:
+- **Session artifact:** `ai-contexts/wip/TICKET-123-user-authentication.md` (your requirements)
+- **Session plan:** `ai-contexts/project-plans/active/projectplan-TICKET-123-user-authentication-2025-10-24.md`
+- **Session scope:** Everything related to implementing user authentication
+- **Session lifecycle:** From `TASK START` through implementation to `TASK COMPLETE`
+
+### 📋 What is a Session Template?
+
+A **session template** is a predefined conversational framework that structures how an AI engages with a particular type of problem domain. It includes context initialization, role definitions, prompt scaffolding, and guidelines for expected behavior.
+
+**Key Characteristics:**
+- **Domain-specific** - Optimized for a particular type of problem (debugging, features, refactoring, etc.)
+- **Reusable configuration** - Preloads domain knowledge and behavioral parameters
+- **Structured framework** - Guides AI reasoning patterns for that domain
+- **Consistency enforcer** - Ensures similar problems are approached similarly
+- **Best practices embedded** - Captures proven patterns for each domain
+
+**Available Templates:**
+
+| Template | Problem Domain | When to Use |
+|----------|----------------|-------------|
+| **feature-development-session.md** | New features, screens, components | Building new functionality |
+| **debugging-session.md** | Bug analysis and resolution | Investigating and fixing bugs |
+| **refactor-optimization-session.md** | Code improvements, performance | Improving existing code |
+| **database-schema-session.md** | Database changes, migrations | Schema design and changes |
+| **api-endpoint-session.md** | API development and updates | REST/GraphQL endpoints |
+| **design-review-session.md** | UI/UX review and implementation | Design implementation |
+| **documentation-session.md** | Technical documentation | Writing docs |
+| **security-review-session.md** | Security audits and fixes | Security analysis |
+| **init-session.md** | General exploration | Exploratory work |
+
+**In Practice:**
+When you choose template #1 during `TASK START`:
+- Template **preloads** feature development best practices
+- AI knows to ask about **user stories, success criteria, edge cases**
+- Session follows **feature-specific workflow** (requirements → design → implement → test)
+- Output format matches **feature documentation standards**
+
+### 🔄 How Sessions and Templates Work Together
+
+```
+1. User: TASK START TICKET-456 payment-gateway-integration
+
+2. AI: Shows 9 session templates to choose from
+
+3. User: Selects "api-endpoint-session.md" (Template #5)
+
+4. AI: Creates session context file with API-specific prompts:
+   - What API endpoints are needed?
+   - What's the request/response format?
+   - What authentication is required?
+   - What error handling is needed?
+
+5. User: Fills requirements in the session context
+
+6. User: START (creates project plan from template's framework)
+
+7. Session runs: AI follows API-specific workflow patterns
+
+8. Session ends: TASK COMPLETE (archives session artifacts)
+```
+
+**Why This Matters:**
+- ✅ **Consistency** - Similar problems solved similarly across your team
+- ✅ **Efficiency** - Don't re-explain domain context every time
+- ✅ **Quality** - Best practices embedded in every session type
+- ✅ **Onboarding** - New team members see proven patterns
+- ✅ **Knowledge capture** - Sessions become searchable knowledge base
+
+**Developer-Focused Definition:**
+
+> **Session:** A runtime scope maintaining context and conversation history between user and AI for a defined problem-solving task (e.g., debugging network code, designing ESP32 mesh protocol, optimizing React performance).
+
+> **Session Template:** A reusable configuration that preloads domain knowledge, context, and behavioral parameters — such as "Embedded Systems Debugging," "React Frontend Optimization," or "Database Migration Planning." Ensures the AI operates within the intended reasoning pattern for that domain.
 
 ---
 
@@ -549,10 +644,12 @@ Created by the engineering team at **Tichaona Hwandaza**.
 
 ## 📊 Project Stats
 
-- **Templates:** 9 specialized templates
-- **Examples:** 10 complete examples
+- **Session Templates:** 9 specialized templates for different problem domains
+- **Session Framework:** Formalized definitions and bounded interaction model
+- **Examples:** 10 complete session examples
 - **Context Documents:** 9 core contexts + 2 reference guides
-- **Documentation Pages:** 10+ guides
+- **Documentation Pages:** 10+ guides + Core Concepts section
+- **VS Code Snippets:** 32 workflow snippets (28 commands + 4 templates)
 - **Integration Support:** 2 platforms (VS Code, GitHub) + Slack coming soon
 - **Lines of Documentation:** 50,000+
 - **Real Usage:** Production-tested across multiple projects
