@@ -380,4 +380,36 @@
       "Please display all available workflow commands organized by category with descriptions."
     ]
   }
+,
+
+  "show-snippets": {
+    "prefix": "show-snippets",
+    "description": "Display all VS Code snippets for workflow commands",
+    "body": [
+      "SHOW SNIPPETS",
+      "",
+      "Please:",
+      "1. Read snippet files from integrations/vscode/",
+      "2. Display all snippets organized by category",
+      "3. Show prefix (trigger word) and description for each",
+      "4. Provide installation instructions",
+      "5. Show total count of available snippets"
+    ]
+  },
+
+  "compare-requirements": {
+    "prefix": "compare-req",
+    "description": "Analyze alignment between requirements and project plan",
+    "body": [
+      "COMPARE REQUIREMENTS",
+      "",
+      "Please:",
+      "1. Read requirements context from ai-contexts/wip/",
+      "2. Read current project plan from ai-contexts/project-plans/active/",
+      "3. Analyze alignment and identify gaps",
+      "4. Calculate alignment percentage",
+      "5. Provide specific recommendations",
+      "6. Suggest next action (SYNC, REPLAN, or APPROVE)"
+    ]
+  }
 }

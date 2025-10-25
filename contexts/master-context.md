@@ -523,6 +523,98 @@ Phase 2: Components [2/5] 🔄 In Progress
 
 ## Requirements-Plan Synchronization Commands
 
+### `COMPARE REQUIREMENTS`
+**Purpose:** Diagnostic analysis of alignment between requirements and project plan
+**When:** Before deciding whether to SYNC REQUIREMENTS or REPLAN
+**Type:** Read-only diagnostic operation (makes no changes)
+
+**AI Actions:**
+1. Read requirements context file from `ai-contexts/wip/`
+2. Read current project plan from `ai-contexts/project-plans/active/`
+3. Analyze alignment and identify gaps:
+   - Requirements in context but missing from plan
+   - Details in plan but missing from requirements
+   - Mismatches or inconsistencies
+4. Calculate alignment percentage
+5. Provide specific recommendations
+6. Suggest next action (SYNC REQUIREMENTS, REPLAN, or APPROVE PLAN)
+
+**Example Response:**
+```
+🔍 Comparing Requirements with Project Plan...
+
+📝 Requirements: wip/TICKET-123-user-auth.md
+📋 Project Plan: projectplan-TICKET-123-user-auth-2025-10-24.md
+
+📊 Alignment Analysis:
+
+✅ Aligned (80%):
+- User registration with email/password
+- Login functionality
+- Session management basics
+- Password hashing with bcrypt
+
+⚠️ Missing from Requirements (Plan has details):
+- JWT token expiration: 24 hours (from Phase 2 analysis)
+- Password requirements: min 8 chars, 1 uppercase, 1 number
+- Rate limiting: 5 failed attempts = 15min lockout
+- Database schema: users table needs 'locked_until' column
+- Error handling: Return 401 for invalid credentials
+
+⚠️ Missing from Plan (Requirements mention):
+- "Remember me" functionality (mentioned in requirements)
+- Email verification (listed in success criteria)
+
+❌ Mismatches:
+- Requirements say "sessions expire after 1 hour"
+- Plan specifies "JWT tokens expire after 24 hours"
+  → Need to clarify which is correct
+
+📈 Overall Alignment: 65%
+- 8 items aligned
+- 5 items in plan but not requirements
+- 2 items in requirements but not plan
+- 1 mismatch needs resolution
+
+💡 Recommendations:
+
+1. **Resolve Mismatch First:**
+   - Clarify session/token expiration time (1 hour vs 24 hours)
+   - Update requirements or plan to match decision
+
+2. **Then Choose:**
+   - Run `SYNC REQUIREMENTS` to add plan details to requirements
+     → Adds: JWT expiration, password rules, rate limiting, DB schema
+   - OR run `REPLAN` to add missing features to plan
+     → Adds: "Remember me", email verification
+
+3. **Or:**
+   - Manually update requirements to include missing items
+   - Then run `REPLAN` to regenerate plan with all features
+
+🎯 Suggested Next Step:
+SYNC REQUIREMENTS (to capture plan's detailed analysis in requirements for QA)
+
+After sync, manually add "Remember me" and "Email verification" to requirements, then REPLAN.
+```
+
+**Workflow Integration:**
+```
+TASK START → Fill Requirements → START → Generate Plan
+                ↓
+    Requirements evolve ← → Plan gets detailed
+                ↓
+COMPARE REQUIREMENTS → identifies gaps (read-only diagnostic)
+                ↓
+        [User decides based on comparison]
+                ↓
+SYNC REQUIREMENTS or REPLAN → re-align
+                ↓
+COMPARE REQUIREMENTS again → verify alignment
+                ↓
+APPROVE PLAN → lock and implement
+```
+
 ### `SYNC REQUIREMENTS`
 **Purpose:** Update requirements context to match current project plan
 **When:** After creating/modifying project plan, before starting implementation
@@ -882,9 +974,90 @@ ADVANCED:
 
 HELP:
   SHOW COMMANDS               - Display this command reference
+  SHOW SNIPPETS               - Display all VS Code snippets available
 
 💡 TIP: All commands available as VS Code snippets with 'ai-' prefix
 📖 Full documentation: contexts/workflow-commands-reference.md
+```
+
+### `SHOW SNIPPETS`
+**Purpose:** Display all VS Code snippets registered for workflow commands
+**AI Actions:**
+1. List snippet files location: `integrations/vscode/`
+2. Read both snippet files:
+   - `ai-workflow-snippets.code-snippets` (basic templates)
+   - `ai-workflow-commands.code-snippets` (workflow commands)
+3. Parse JSON and extract all snippet definitions
+4. Display snippets organized by category (Session, Task, Sync, File, Reporting, Advanced, Help)
+5. Show prefix (trigger word) and description for each
+6. Provide installation instructions for VS Code
+7. Show total count of available snippets
+
+**Example Response:**
+```
+📋 VS Code Snippets for AI Workflow
+
+📁 Location: integrations/vscode/
+
+📦 ai-workflow-commands.code-snippets (28 snippets):
+
+SESSION MANAGEMENT:
+  ai-train              - First-time AI training message
+  resume                - Resume AI session and continue work
+  resume-ticket         - Resume specific project by ticket
+  continue              - Continue implementation after RESUME
+  review                - Review completed work after RESUME
+
+TASK MANAGEMENT:
+  task-start            - Start new task with template selection
+  start                 - Begin work after filling context file
+  task-update           - Update project plan checkboxes
+  task-complete         - Complete and archive project
+  task-status           - Show current task progress
+
+REQUIREMENTS-PLAN SYNC:
+  sync-req              - Update requirements to match plan
+  replan                - Re-analyze and update plan
+  approve-plan          - Lock plan and begin implementation
+  plan-status           - Check synchronization status
+  unlock-plan           - Reset to planning phase
+
+FILE MANAGEMENT:
+  move-context          - Move user context to completed
+  archive-project       - Archive project plan and context
+  clean-wip             - Clean completed items from wip
+
+REPORTING:
+  document-work         - Generate commit message
+  summary-week          - Show this week's completed work
+  summary-month         - Show this month's completed work
+  find-work             - Search completed project plans
+
+ADVANCED:
+  rollback-task         - Move project back to active
+  duplicate-plan        - Copy project plan for similar work
+  template-save         - Save plan as reusable template
+
+HELP:
+  show-commands         - Display all workflow commands
+
+📦 ai-workflow-snippets.code-snippets (4 snippets):
+  ai-master             - Load core AI contexts
+  ai-feature            - Start feature development session
+  ai-debug              - Start debugging session
+  ai-refactor           - Start refactoring session
+
+📊 Total: 32 snippets available
+
+💡 Installation:
+1. Copy files from integrations/vscode/ to:
+   - Windows: %APPDATA%\Code\User\snippets\
+   - Mac/Linux: ~/.config/Code/User/snippets/
+2. Restart VS Code
+3. Type snippet prefix in any file (e.g., "task-start")
+4. Press Tab to expand snippet
+
+📖 Documentation: contexts/How-to-Use-VS-Code-Snippets.md
 ```
 
 ## Command Standards

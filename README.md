@@ -278,15 +278,19 @@ What would you like to do?
 
 **Then use the snippets:**
 - Type `ai-train` + Tab → AI training message (first time setup)
+- Type `resume` + Tab → RESUME command (session restoration)
 - Type `task-start` + Tab → Full TASK START command
 - Type `start` + Tab → START command (after filling requirements)
-- Type `sync-req` + Tab → SYNC REQUIREMENTS command (NEW!)
-- Type `replan` + Tab → REPLAN command (NEW!)
-- Type `approve-plan` + Tab → APPROVE PLAN command (NEW!)
-- Type `plan-status` + Tab → PLAN STATUS command (NEW!)
+- Type `compare-req` + Tab → COMPARE REQUIREMENTS command (NEW!)
+- Type `sync-req` + Tab → SYNC REQUIREMENTS command
+- Type `replan` + Tab → REPLAN command
+- Type `approve-plan` + Tab → APPROVE PLAN command
+- Type `plan-status` + Tab → PLAN STATUS command
 - Type `task-status` + Tab → TASK STATUS command
 - Type `move-context` + Tab → MOVE USER CONTEXT command
 - Type `task-complete` + Tab → TASK COMPLETE command
+- Type `show-commands` + Tab → SHOW COMMANDS (list all commands)
+- Type `show-snippets` + Tab → SHOW SNIPPETS (list all snippets) (NEW!)
 
 ### Method 3: Copy-Paste Commands
 ```bash
@@ -302,6 +306,7 @@ TASK START <ticket-id> <short-description>  # Choose template, create context fi
 START                                       # Create project plan & begin work
 
 # Requirements-Plan Synchronization
+COMPARE REQUIREMENTS                        # Analyze alignment between requirements and plan (NEW!)
 SYNC REQUIREMENTS                           # Update requirements to match plan
 REPLAN                                      # Re-analyze requirements, update plan
 APPROVE PLAN                                # Lock plan and begin implementation
@@ -316,6 +321,10 @@ MOVE USER CONTEXT                           # Archive context file
 # After RESUME
 CONTINUE                                    # Continue with next task (NEW!)
 REVIEW                                      # Review completed work (NEW!)
+
+# Help Commands
+SHOW COMMANDS                               # Display all workflow commands
+SHOW SNIPPETS                               # Display all VS Code snippets (NEW!)
 ```
 
 **💡 Pro Tip:** After the first session, AI will remember the commands for the rest of that conversation!

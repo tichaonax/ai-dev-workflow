@@ -132,6 +132,50 @@ AI: ✅ Created projectplan-NOTKT-tailwind-conversion-2025-10-21.md
 
 ### **Requirements-Plan Synchronization Commands**
 
+#### `COMPARE REQUIREMENTS`
+**Purpose:** Diagnostic analysis of alignment between requirements and project plan
+**AI Actions:**
+1. Read requirements context from `ai-contexts/wip/`
+2. Read current project plan from `ai-contexts/project-plans/active/`
+3. Analyze alignment and identify gaps
+4. Calculate alignment percentage
+5. Provide specific recommendations
+6. Suggest next action (SYNC, REPLAN, or APPROVE)
+7. **Read-only operation** - makes no changes
+
+**Example:**
+```
+User: "COMPARE REQUIREMENTS"
+AI: 🔍 Comparing Requirements with Project Plan...
+
+    📊 Alignment Analysis:
+
+    ✅ Aligned (80%):
+    - User registration, login, session management
+
+    ⚠️ Missing from Requirements (Plan has):
+    - JWT expiration: 24 hours
+    - Password rules: min 8 chars
+    - Rate limiting details
+
+    ⚠️ Missing from Plan (Requirements have):
+    - "Remember me" functionality
+    - Email verification
+
+    ❌ Mismatches:
+    - Requirements: sessions expire 1 hour
+    - Plan: JWT expires 24 hours
+      → Need to clarify
+
+    📈 Overall Alignment: 65%
+
+    💡 Recommended:
+    1. Resolve mismatch (session expiration)
+    2. Run SYNC REQUIREMENTS to add plan details
+    3. Manually add "Remember me" to requirements
+    4. Run REPLAN to update plan
+```
+
 #### `SYNC REQUIREMENTS`
 **Purpose:** Update requirements context to match current project plan
 **AI Actions:**
@@ -390,6 +434,7 @@ TASK MANAGEMENT:
   TASK STATUS                 - Show current progress and next steps
 
 REQUIREMENTS-PLAN SYNC:
+  COMPARE REQUIREMENTS         - Analyze requirements-plan alignment
   SYNC REQUIREMENTS           - Update requirements to match project plan
   REPLAN                      - Re-analyze requirements and update plan
   APPROVE PLAN                - Lock requirements/plan and begin implementation
@@ -413,10 +458,89 @@ ADVANCED:
   TEMPLATE SAVE {name}        - Save current plan as reusable template
 
 HELP:
+  SHOW SNIPPETS               - Display all VS Code snippets available
   SHOW COMMANDS               - Display this command reference
 
 💡 TIP: All commands available as VS Code snippets with 'ai-' prefix
 📖 Full documentation: contexts/workflow-commands-reference.md
+```
+
+#### `SHOW SNIPPETS`
+**Purpose:** Display all VS Code snippets registered for workflow commands
+**AI Actions:**
+1. List snippet files location: `integrations/vscode/`
+2. Read both snippet files:
+   - `ai-workflow-snippets.code-snippets` (basic templates)
+   - `ai-workflow-commands.code-snippets` (workflow commands)
+3. Display all snippets organized by category
+4. Show prefix (trigger word) and description for each snippet
+5. Provide installation instructions for VS Code
+6. Show total count of available snippets
+
+**Example Output:**
+```
+📋 VS Code Snippets for AI Workflow
+
+📁 Location: integrations/vscode/
+
+📦 ai-workflow-commands.code-snippets (28 snippets):
+
+SESSION MANAGEMENT:
+  ai-train              - First-time AI training message
+  resume                - Resume AI session and continue work
+  resume-ticket         - Resume specific project by ticket
+  continue              - Continue implementation after RESUME
+  review                - Review completed work after RESUME
+
+TASK MANAGEMENT:
+  task-start            - Start new task with template selection
+  start                 - Begin work after filling context file
+  task-update           - Update project plan checkboxes
+  task-complete         - Complete and archive project
+  task-status           - Show current task progress
+
+REQUIREMENTS-PLAN SYNC:
+  sync-req              - Update requirements to match plan
+  replan                - Re-analyze and update plan
+  approve-plan          - Lock plan and begin implementation
+  plan-status           - Check synchronization status
+  unlock-plan           - Reset to planning phase
+
+FILE MANAGEMENT:
+  move-context          - Move user context to completed
+  archive-project       - Archive project plan and context
+  clean-wip             - Clean completed items from wip
+
+REPORTING:
+  document-work         - Generate commit message
+  summary-week          - Show this week's completed work
+  summary-month         - Show this month's completed work
+  find-work             - Search completed project plans
+
+ADVANCED:
+  rollback-task         - Move project back to active
+  duplicate-plan        - Copy project plan for similar work
+  template-save         - Save plan as reusable template
+
+HELP:
+  SHOW SNIPPETS               - Display all VS Code snippets available
+  show-commands         - Display all workflow commands
+
+📦 ai-workflow-snippets.code-snippets (4 snippets):
+  ai-master             - Load core AI contexts
+  ai-feature            - Start feature development session
+  ai-debug              - Start debugging session
+  ai-refactor           - Start refactoring session
+
+📊 Total: 32 snippets available
+
+💡 Installation:
+1. Copy files from integrations/vscode/ to:
+   - Windows: %APPDATA%\Code\User\snippets\
+   - Mac/Linux: ~/.config/Code/User/snippets/
+2. Restart VS Code
+3. Type snippet prefix in any file (e.g., "task-start")
+4. Press Tab to expand snippet
 ```
 
 ## 🔄 Typical Command Workflow
@@ -532,6 +656,7 @@ Planned executable commands:
 | `TASK UPDATE` | Show progress | Updates checkboxes |
 | `TASK COMPLETE` | Finish work | Archives & commits |
 | `TASK STATUS` | Check progress | Shows completion % |
+| `COMPARE REQUIREMENTS` | Analyze requirements-plan alignment | Shows gaps, alignment % |
 | `SYNC REQUIREMENTS` | Update requirements to match plan | Syncs wip/ with plan |
 | `REPLAN` | Re-analyze and update plan | Updates plan from requirements |
 | `APPROVE PLAN` | Lock plan and start coding | Locks requirements & plan |
@@ -548,6 +673,7 @@ Planned executable commands:
 | `DUPLICATE PLAN {ticket}` | Copy structure | New plan from template |
 | `TEMPLATE SAVE {name}` | Save template | Reusable plan structure |
 | `SHOW COMMANDS` | List commands | Displays command reference |
+| `SHOW SNIPPETS` | List VS Code snippets | Shows all snippet prefixes |
 
 ---
 
