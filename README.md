@@ -203,7 +203,10 @@ git pull
 - Install to multiple projects from same source
 - No need to re-clone for each update
 
-The installer copies only the essential files (`contexts/`, `templates/`, `integrations/`) to your project's `ai-contexts/` directory. When updating, it automatically backs up your existing `ai-contexts/` before installing fresh files.
+The installer copies only the essential files (`contexts/`, `templates/`, `integrations/`) to your project's `ai-contexts/` directory. When updating, it automatically:
+- Backs up your existing `ai-contexts/` directory with timestamp
+- Installs fresh framework files 
+- **Preserves your work:** custom templates, work-in-progress sessions, project plans, and team contexts
 
 ---
 
@@ -338,6 +341,7 @@ SHOW SNIPPETS                               # Display all VS Code snippets (NEW!
 - **[Quick Start](docs/quick-start.md)** - Get running in 5 minutes
 - **[AI Training Guide](docs/ai-training.md)** - How to teach AI the workflow commands
 - **[Installation](docs/installation.md)** - Detailed setup (4 methods)
+- **[Framework Updates](docs/framework-update-preservation.md)** - How updates preserve your work
 - **[Core Concepts](docs/concepts.md)** - Understand the system
 - **[Sessions & Templates](#-core-concepts-sessions--templates)** - Fundamental definitions (in this README)
 

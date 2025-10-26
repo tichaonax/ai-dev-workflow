@@ -8,6 +8,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Enhanced installer preservation functionality during framework updates
+- Comprehensive backup and restore system for user content
+- Test suite for installer preservation functionality
+
+### Enhanced
+- **Installer now preserves user work during updates:**
+  - Custom templates (both `templates/custom/` and custom files in `templates/v1/`)
+  - Work-in-progress sessions (`wip/` directory and subdirectories)
+  - Project plans (`project-plans/active/` and `project-plans/completed/`)
+  - Custom team contexts (`custom/` directory)
+- Updated installation documentation with preservation details
+- Enhanced user experience during framework updates
+
+### Added (Previous)
 - Initial repository setup
 - Core context documents (master-context, code-workflow)
 - 9 session templates

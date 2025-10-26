@@ -181,7 +181,7 @@ if [ -d "$TARGET_PROJECT/ai-contexts" ]; then
     echo "This will:"
     echo "  • Backup existing ai-contexts/ → ai-contexts.backup.$(date +%Y%m%d_%H%M%S)/"
     echo "  • Install fresh copy of workflow files"
-    echo "  • Preserve any custom/ folders you may have created"
+    echo "  • Preserve your custom templates, wip sessions, and project plans"
     echo ""
     echo -e "${BLUE}Do you want to proceed with overwrite? ${NC}"
    if [ "$ASSUME_YES" = true ]; then
@@ -201,12 +201,38 @@ if [ -d "$TARGET_PROJECT/ai-contexts" ]; then
    run_mv "$TARGET_PROJECT/ai-contexts" "$TARGET_PROJECT/$BACKUP_NAME"
    echo "  ✓ Backup created at: $TARGET_PROJECT/$BACKUP_NAME"
 
-   # Preserve custom/ folder if it exists (team-specific contexts)
+   # Preserve user-specific directories that shouldn't be overwritten
    CUSTOM_BACKUP_DIR=""
+   TEMPLATES_BACKUP_DIR=""
+   WIP_BACKUP_DIR=""
+   PROJECT_PLANS_BACKUP_DIR=""
+   
+   # Check for custom contexts
    if [ -d "$TARGET_PROJECT/$BACKUP_NAME/custom" ]; then
       echo -e "${BLUE}Preserving custom team contexts...${NC}"
       CUSTOM_BACKUP_DIR="$TARGET_PROJECT/$BACKUP_NAME/custom"
       echo "  ✓ Custom contexts will be restored after installation"
+   fi
+   
+   # Check for custom templates
+   if [ -d "$TARGET_PROJECT/$BACKUP_NAME/templates" ]; then
+      echo -e "${BLUE}Preserving custom templates...${NC}"
+      TEMPLATES_BACKUP_DIR="$TARGET_PROJECT/$BACKUP_NAME/templates"
+      echo "  ✓ Custom templates will be restored after installation"
+   fi
+   
+   # Check for work-in-progress files
+   if [ -d "$TARGET_PROJECT/$BACKUP_NAME/wip" ] && [ "$(find "$TARGET_PROJECT/$BACKUP_NAME/wip" -name '*.md' -not -name 'README.md' 2>/dev/null | wc -l)" -gt 0 ]; then
+      echo -e "${BLUE}Preserving work-in-progress sessions...${NC}"
+      WIP_BACKUP_DIR="$TARGET_PROJECT/$BACKUP_NAME/wip"
+      echo "  ✓ WIP sessions will be restored after installation"
+   fi
+   
+   # Check for project plans
+   if [ -d "$TARGET_PROJECT/$BACKUP_NAME/project-plans" ]; then
+      echo -e "${BLUE}Preserving project plans...${NC}"
+      PROJECT_PLANS_BACKUP_DIR="$TARGET_PROJECT/$BACKUP_NAME/project-plans"
+      echo "  ✓ Project plans will be restored after installation"
    fi
 fi
 
@@ -379,22 +405,130 @@ fi
 
 echo "  ✓ Essential files copied"
 
-# Restore custom contexts from backup if they existed
+# Restore preserved directories from backup
+echo ""
+echo -e "${GREEN}Restoring preserved user content from backup...${NC}"
+
+# Restore custom contexts
 if [ -n "$CUSTOM_BACKUP_DIR" ] && [ -d "$CUSTOM_BACKUP_DIR" ]; then
-   echo ""
-   echo -e "${GREEN}Restoring custom team contexts from backup...${NC}"
+   echo "  → Restoring custom team contexts"
    # Copy all .md files except README.md from backup
    for custom_file in "$CUSTOM_BACKUP_DIR"/*.md; do
       if [ -f "$custom_file" ]; then
          filename=$(basename "$custom_file")
          if [ "$filename" != "README.md" ]; then
             run_cp "$custom_file" "$TARGET_PROJECT/ai-contexts/custom/"
-            echo "  ✓ Restored: $filename"
+            echo "    ✓ Restored: $filename"
          fi
       fi
    done
-   echo "  ✓ Custom team contexts restored"
 fi
+
+# Restore custom templates
+if [ -n "$TEMPLATES_BACKUP_DIR" ] && [ -d "$TEMPLATES_BACKUP_DIR" ]; then
+   echo "  → Restoring custom templates"
+   # Create custom templates directory if it doesn't exist
+   run_mkdir "$TARGET_PROJECT/ai-contexts/templates/custom"
+   
+   # Copy custom templates (avoid overwriting v1 templates)
+   for template_dir in "$TEMPLATES_BACKUP_DIR"/*; do
+      if [ -d "$template_dir" ]; then
+         dir_name=$(basename "$template_dir")
+         if [ "$dir_name" != "v1" ]; then
+            # Copy entire custom template directory
+            run_cp -r "$template_dir" "$TARGET_PROJECT/ai-contexts/templates/"
+            echo "    ✓ Restored template directory: $dir_name"
+         else
+            # For v1 directory, only restore custom templates (non-framework ones)
+            # Check if there are any custom templates by comparing with known framework templates
+            framework_templates=("api-endpoint-session.md" "database-schema-session.md" "debugging-session.md" \
+                               "design-review-session.md" "documentation-session.md" "feature-development-session.md" \
+                               "init-session.md" "refactor-optimization-session.md" "security-review-session.md")
+            
+            for template_file in "$template_dir"/*.md; do
+               if [ -f "$template_file" ]; then
+                  filename=$(basename "$template_file")
+                  is_framework_template=false
+                  
+                  # Check if this is a framework template
+                  for fw_template in "${framework_templates[@]}"; do
+                     if [ "$filename" = "$fw_template" ]; then
+                        is_framework_template=true
+                        break
+                     fi
+                  done
+                  
+                  # If it's not a framework template, restore it
+                  if [ "$is_framework_template" = false ]; then
+                     run_cp "$template_file" "$TARGET_PROJECT/ai-contexts/templates/v1/"
+                     echo "    ✓ Restored custom template: $filename"
+                  fi
+               fi
+            done
+         fi
+      fi
+   done
+fi
+
+# Restore work-in-progress files
+if [ -n "$WIP_BACKUP_DIR" ] && [ -d "$WIP_BACKUP_DIR" ]; then
+   echo "  → Restoring work-in-progress sessions"
+   # Copy all .md files except README.md
+   for wip_file in "$WIP_BACKUP_DIR"/*.md; do
+      if [ -f "$wip_file" ]; then
+         filename=$(basename "$wip_file")
+         if [ "$filename" != "README.md" ]; then
+            run_cp "$wip_file" "$TARGET_PROJECT/ai-contexts/wip/"
+            echo "    ✓ Restored: $filename"
+         fi
+      fi
+   done
+   # Also copy any subdirectories in wip
+   for wip_dir in "$WIP_BACKUP_DIR"/*; do
+      if [ -d "$wip_dir" ]; then
+         dir_name=$(basename "$wip_dir")
+         run_cp -r "$wip_dir" "$TARGET_PROJECT/ai-contexts/wip/"
+         echo "    ✓ Restored WIP directory: $dir_name"
+      fi
+   done
+fi
+
+# Restore project plans
+if [ -n "$PROJECT_PLANS_BACKUP_DIR" ] && [ -d "$PROJECT_PLANS_BACKUP_DIR" ]; then
+   echo "  → Restoring project plans"
+   
+   # Restore active project plans
+   if [ -d "$PROJECT_PLANS_BACKUP_DIR/active" ]; then
+      for plan_file in "$PROJECT_PLANS_BACKUP_DIR/active"/*.md; do
+         if [ -f "$plan_file" ]; then
+            filename=$(basename "$plan_file")
+            if [ "$filename" != "README.md" ]; then
+               run_cp "$plan_file" "$TARGET_PROJECT/ai-contexts/project-plans/active/"
+               echo "    ✓ Restored active plan: $filename"
+            fi
+         fi
+      done
+   fi
+   
+   # Restore completed project plans
+   if [ -d "$PROJECT_PLANS_BACKUP_DIR/completed" ]; then
+      for plan_item in "$PROJECT_PLANS_BACKUP_DIR/completed"/*; do
+         if [ -f "$plan_item" ]; then
+            filename=$(basename "$plan_item")
+            if [ "$filename" != "README.md" ] && [[ "$filename" == *.md ]]; then
+               run_cp "$plan_item" "$TARGET_PROJECT/ai-contexts/project-plans/completed/"
+               echo "    ✓ Restored completed plan: $filename"
+            fi
+         elif [ -d "$plan_item" ]; then
+            dir_name=$(basename "$plan_item")
+            run_cp -r "$plan_item" "$TARGET_PROJECT/ai-contexts/project-plans/completed/"
+            echo "    ✓ Restored completed plans directory: $dir_name"
+         fi
+      done
+   fi
+fi
+
+echo "  ✓ User content restoration complete"
 
 echo ""
 echo -e "${GREEN}[4/5] Creating version tracking file...${NC}"

@@ -75,7 +75,11 @@ git pull
 - Installer detects existing `ai-contexts/` directory
 - Automatically creates timestamped backup: `ai-contexts.backup.YYYYMMDD_HHMMSS/`
 - Asks for confirmation before overwriting
-- Preserves any custom folders you created
+- **Preserves your important work:**
+  - Custom templates (both in `templates/custom/` and custom files in `templates/v1/`)
+  - Work-in-progress sessions (`wip/` directory)
+  - Project plans (`project-plans/active/` and `project-plans/completed/`)
+  - Custom team contexts (`custom/` directory)
 
 ### Installer Flags:
 - `--dry-run` : Preview actions without changing files
