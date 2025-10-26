@@ -349,6 +349,7 @@ SHOW SNIPPETS                               # Display all VS Code snippets (NEW!
 - **[Complete Workflow Guide](docs/complete-workflow.md)** - Step-by-step two-phase process
 - **[Requirements-Plan Sync](docs/requirements-sync-workflow.md)** - Keep requirements and plans aligned
 - **[Session Restoration & Handoff](docs/session-restoration-handoff.md)** - Resume work after interruptions (NEW!)
+- **[Three-Document Knowledge Base](docs/three-document-knowledge-base.md)** - Complete documentation system (NEW!)
 - **[Best Practices](docs/best-practices.md)** - Tips from experienced users
 - **[Templates Guide](templates/README.md)** - How to use templates
 - **[Examples](examples/)** - Real-world examples
