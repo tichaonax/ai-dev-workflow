@@ -274,6 +274,7 @@ run_mkdir "$TARGET_PROJECT/ai-contexts/wip"
 run_mkdir "$TARGET_PROJECT/ai-contexts/project-plans/active"
 run_mkdir "$TARGET_PROJECT/ai-contexts/project-plans/completed"
 run_mkdir "$TARGET_PROJECT/ai-contexts/custom"
+run_mkdir "$TARGET_PROJECT/ai-contexts/integrations/vscode"
 echo "  ✓ Directory structure created"
 
 echo ""
@@ -367,6 +368,14 @@ run_cp "$SRC_ROOT/custom/.gitkeep" \
    "$TARGET_PROJECT/ai-contexts/custom/" 2>/dev/null || true
 run_cp "$SRC_ROOT/custom/README.md" \
    "$TARGET_PROJECT/ai-contexts/custom/" 2>/dev/null || true
+
+
+# Copy VS Code snippets
+echo "  → VS Code snippets"
+if [ -d "$SRC_ROOT/integrations/vscode" ]; then
+   run_cp "$SRC_ROOT/integrations/vscode/"*.code-snippets \
+      "$TARGET_PROJECT/ai-contexts/integrations/vscode/" 2>/dev/null || true
+fi
 
 echo "  ✓ Essential files copied"
 
@@ -482,7 +491,63 @@ echo "  ✓ README created"
 
 # Create .gitignore for work-in-progress folders
 echo ""
-echo -e "${GREEN}[6/6] Configuring git...${NC}"
+
+# VS Code snippet registration
+echo ""
+echo -e "${GREEN}[6/7] VS Code snippet registration...${NC}"
+
+VSCODE_SNIPPETS_COPIED=false
+if [ -f "$TARGET_PROJECT/ai-contexts/integrations/vscode/ai-workflow-commands.code-snippets" ]; then
+   echo "  ✓ VS Code snippets available in ai-contexts/integrations/vscode/"
+   echo ""
+   echo -e "${BLUE}Would you like to register these snippets with VS Code?${NC}"
+   echo "  This will copy snippet files to .vscode/ in your project root."
+   echo "  You'll be able to use triggers like 'task-start', 'resume', 'compare-req', etc."
+   echo ""
+
+   if [ "$ASSUME_YES" = true ]; then
+      echo "  → assume-yes: registering snippets with VS Code"
+      REGISTER_SNIPPETS=true
+   else
+      read -p "Register VS Code snippets? (y/n) " -n 1 -r
+      echo
+      if [[ $REPLY =~ ^[Yy]$ ]]; then
+         REGISTER_SNIPPETS=true
+      else
+         REGISTER_SNIPPETS=false
+      fi
+   fi
+
+   if [ "$REGISTER_SNIPPETS" = true ]; then
+      # Create .vscode folder if it doesn't exist
+      if [ ! -d "$TARGET_PROJECT/.vscode" ]; then
+         echo "  → Creating .vscode/ folder in project root"
+         run_mkdir "$TARGET_PROJECT/.vscode"
+      fi
+
+      # Copy snippet files
+      echo "  → Copying snippet files to .vscode/"
+      run_cp "$TARGET_PROJECT/ai-contexts/integrations/vscode/"*.code-snippets \
+         "$TARGET_PROJECT/.vscode/" 2>/dev/null || true
+
+      VSCODE_SNIPPETS_COPIED=true
+      echo "  ✓ VS Code snippets registered"
+      echo ""
+      echo -e "${YELLOW}⚠️  IMPORTANT: Restart VS Code for snippets to take effect${NC}"
+      echo ""
+   else
+      echo "  → Skipped VS Code snippet registration"
+      echo "  → You can manually copy snippets later from:"
+      echo "     ai-contexts/integrations/vscode/*.code-snippets"
+      echo "     to .vscode/ folder"
+   fi
+else
+   echo "  ⚠️  VS Code snippets not found in source (expected at integrations/vscode/)"
+fi
+
+# Create .gitignore for work-in-progress folders
+echo ""
+echo -e "${GREEN}[7/7] Configuring git...${NC}"
 if [ "$DRY_RUN" = true ]; then
    echo "DRY-RUN: would create ai-contexts/.gitignore"
 else
@@ -542,6 +607,10 @@ echo "  • Core contexts (master-context, code-workflow)"
 echo "  • Backend contexts (API, database)"
 echo "  • Frontend contexts (components, styling, UI)"
 echo "  • 9 session templates"
+echo "  • VS Code snippets (32 snippets)"
+if [ "$VSCODE_SNIPPETS_COPIED" = true ]; then
+   echo "  • VS Code snippet registration (.vscode/)"
+fi
 echo "  • Version tracking"
 echo "  • Project README"
 echo ""
@@ -569,6 +638,15 @@ echo "4. Try your first session:"
 echo "   • Pick a template from templates/v1/"
 echo "   • Load contexts with AI"
 echo "   • Follow the workflow"
+echo ""
+if [ "$VSCODE_SNIPPETS_COPIED" = true ]; then
+   echo "5. Use VS Code snippets:"
+   echo "   • Restart VS Code to activate snippets"
+   echo "   • Type 'task-start' + Tab to start new task"
+   echo "   • Type 'resume' + Tab to resume session"
+   echo "   • Type 'show-snippets' + Tab to see all snippets"
+   echo ""
+fi
 echo ""
 echo "📖 Full documentation:"
 echo "   https://github.com/tichaonax/ai-dev-workflow"
