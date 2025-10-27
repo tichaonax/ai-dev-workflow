@@ -202,7 +202,7 @@ cat > ai-contexts/contexts/custom/project-patterns.md << 'EOF'
 - Tailwind CSS for styling
 
 ## Our Conventions
-- Feature branches: feature/JIRA-123-description
+- Feature branches: feature/123-description
 - Component naming: PascalCase
 - File naming: kebab-case
 - Test files: *.test.ts

@@ -347,7 +347,7 @@ VS Code snippets support variables. You can make them more dynamic:
       "3. Follow the workflow strictly",
       "",
       "Feature: ${1:feature-name}",
-      "Ticket: ${2:JIRA-123}",
+      "Ticket: ${2:123}",
       "Description: ${3:description}",
       "$0"
     ],

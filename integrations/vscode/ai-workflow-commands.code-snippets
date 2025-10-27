@@ -26,7 +26,7 @@
     "prefix": "task-start",
     "description": "Start a new task with template selection (Phase 1: Setup)",
     "body": [
-      "TASK START ${1:jira-ticket} ${2:description}",
+      "TASK START ${1:ticket} ${2:description}",
       "",
       "Please show me the available templates and help me set up the context file for this ${3:feature/bug/refactor}."
     ]
